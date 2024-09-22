@@ -1,0 +1,16 @@
+# Compiled binaries
+*.class
+*.pyc
+*.so
+
+# IDE configuration files
+.idea/
+*.suo
+*.user
+
+# Temporary files
+*.tmp
+*~
+
+# Log files
+*.log
