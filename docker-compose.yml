@@ -1,5 +1,5 @@
 services:
-  postgres:
+  account-service:
     container_name: account_db
     image: postgres
     environment:
@@ -10,6 +10,21 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+    networks:
+      - tripee-net
+    restart: unless-stopped
+
+  ride-service:
+    container_name: ride_dbQ
+    image: postgres
+    environment:
+      POSTGRES_USER: lameute
+      POSTGRES_PASSWORD: lameutepass
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
     networks:
       - tripee-net
     restart: unless-stopped
