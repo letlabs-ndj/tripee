@@ -1,9 +1,9 @@
 server:
-  port: 8080
+  port: 8085
 spring:
   datasource:
     username: lameute
-    url: jdbc:postgresql://localhost:5432/account_db
+    url: jdbc:postgresql://localhost:5433/account_db
     password: lameutepass
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -12,5 +12,10 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: 'true'
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: 'true'
+
+twilio:
+  account_sid: ACf90a1b3400c4f710647d397191a01334
+  auth_token: 398ede37391ba635119005cd12ddeadc
+  service_id: VA0f6d3ac22da41acae35d29f5ee9cd6c5
