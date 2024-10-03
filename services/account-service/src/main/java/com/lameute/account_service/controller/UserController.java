@@ -60,14 +60,12 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<User> updateUser (@RequestBody @Valid UserRequest userRequest,@PathVariable("id") long id){
+    public ResponseEntity<User> updateUser (@RequestBody UserRequest userRequest,@PathVariable("id") long id){
         return new ResponseEntity<>(userService.updateUser(userRequest, id), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/exists/{id}")
-    public ResponseEntity<Boolean> existsById(
-            @PathVariable("id") long id
-    ) {
+    public ResponseEntity<Boolean> checkUser(@PathVariable("id") long id) {
         return new ResponseEntity<>(userService.existById(id), HttpStatus.OK);
     }
 }

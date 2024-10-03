@@ -12,5 +12,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: 'true'
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: 'true'
+
+application:
+  config:
+    account-url: http://localhost:8085/user
