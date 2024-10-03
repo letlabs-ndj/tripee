@@ -17,5 +17,5 @@ spring:
 
 twilio:
   account_sid: ACf90a1b3400c4f710647d397191a01334
-  auth_token: 398ede37391ba635119005cd12ddeadc
-  service_id: VA0f6d3ac22da41acae35d29f5ee9cd6c5
+  auth_token: ca8a00f0bb17df61eb60033b9feb56d0
+  service_id: VA14242fe0dab02f584e95fca3a4c2df8b
