@@ -1,5 +1,6 @@
 package com.lameute.account_service.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -45,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/create/{otpCode}")
-    public ResponseEntity<User> createUser (@PathVariable("otpCode") String otpCode, @RequestBody UserRequest userRequest) throws ApiException{
+    public ResponseEntity<User> createUser (@PathVariable("otpCode") String otpCode, @RequestBody @Valid UserRequest userRequest) throws ApiException{
         if (otpService.verifyOtp(userRequest.phoneNumber(),otpCode)) {
             return new ResponseEntity<>(userService.createUser(userRequest),HttpStatus.CREATED);
         }else{
@@ -59,7 +60,14 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<User> updateUser (@RequestBody UserRequest userRequest,@PathVariable("id") long id){
+    public ResponseEntity<User> updateUser (@RequestBody @Valid UserRequest userRequest,@PathVariable("id") long id){
         return new ResponseEntity<>(userService.updateUser(userRequest, id), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/exists/{id}")
+    public ResponseEntity<Boolean> existsById(
+            @PathVariable("id") long id
+    ) {
+        return new ResponseEntity<>(userService.existById(id), HttpStatus.OK);
     }
 }

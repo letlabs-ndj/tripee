@@ -40,4 +40,7 @@ public class UserService {
         return userRepo.save(user);
     }
 
+    public boolean existById(long id) {
+        return userRepo.existsById(id);
+    }
 }
