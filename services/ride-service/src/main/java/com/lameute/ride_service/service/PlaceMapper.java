@@ -9,6 +9,8 @@ import io.micrometer.common.util.StringUtils;
 
 @Service
 public class PlaceMapper {
+
+    /*Converts place request to place object */
     public Place toPlace(PlaceRequest placeRequest){
         Place place = new Place();
         place.setDetails(placeRequest.details());
@@ -20,7 +22,7 @@ public class PlaceMapper {
         return place;
     }
 
-        /*Update places attributes with placeRequest data */
+    /*Update places attributes with placeRequest data */
     public void mergePlace(Place place, PlaceRequest placeRequest){
         if(StringUtils.isNotBlank(placeRequest.details())){
             place.setDetails(placeRequest.details());

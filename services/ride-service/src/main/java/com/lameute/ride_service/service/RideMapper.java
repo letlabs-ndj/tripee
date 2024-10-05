@@ -1,8 +1,10 @@
 package com.lameute.ride_service.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.lameute.ride_service.dto.RideRequest;
 import com.lameute.ride_service.model.Ride;
-import io.micrometer.common.util.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,16 +14,37 @@ public class RideMapper {
     @Autowired
     private PlaceMapper placeMapper;
 
+    @Autowired
+    private VehicleMapper vehicleMapper;
+
+    /*Converts ride request to ride object */
     public Ride toRide(RideRequest rideRequest){
         Ride ride = new Ride();
         ride.setArrivalPlace(placeMapper.toPlace(rideRequest.arrivalPlace()));
         ride.setPrice(rideRequest.price());
         ride.setDepartureDate(rideRequest.departureDate());
         ride.setDeparturePlace(placeMapper.toPlace(rideRequest.departurePlace()));
+        ride.setVehicle(vehicleMapper.toVehicle(rideRequest.vehicle()));
+        ride.setMaxWeight(rideRequest.maxWeight());
+        ride.setDoExpedition(rideRequest.doExpedition());
         ride.setDepartureTime(rideRequest.departureTime());
+        ride.setAvailablePlaces(rideRequest.availablePlaces());
         ride.setUserId(rideRequest.userId());
 
         return ride;
+    }
+
+    /*Maps ride json String to ride object */
+    public RideRequest toRideRequest(String data){
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        try {
+            RideRequest rideRequest = mapper.readValue(data, RideRequest.class);
+            return rideRequest;
+        } catch (JsonProcessingException e) {
+            System.out.println(e);
+        }
+        return null;
     }
 
     /*Update rides attributes with RideRequest data */
@@ -38,10 +61,16 @@ public class RideMapper {
         if(rideRequest.departureDate() != null){
             ride.setDepartureDate(rideRequest.departureDate());
         }
-        if(StringUtils.isNotBlank(String.valueOf(rideRequest.price()))){
+        if(rideRequest.price() != null){
             ride.setPrice(rideRequest.price());
         }
-        if(StringUtils.isNotBlank(String.valueOf(rideRequest.availablePlaces()))){
+        if(rideRequest.doExpedition() != null){
+            ride.setDoExpedition(rideRequest.doExpedition());
+        }
+        if(rideRequest.maxWeight() != null){
+            ride.setPrice(rideRequest.maxWeight());
+        }
+        if(rideRequest.availablePlaces() != null){
             ride.setAvailablePlaces(rideRequest.availablePlaces());
         }
     }

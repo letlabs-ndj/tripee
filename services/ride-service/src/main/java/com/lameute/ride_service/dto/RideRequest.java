@@ -1,6 +1,5 @@
 package com.lameute.ride_service.dto;
 
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -20,11 +19,20 @@ public record RideRequest (
         @NotNull(message = "Arrival place required")
         PlaceRequest arrivalPlace,
 
+        @NotNull(message = "Vehicle required")
+        VehicleRequest vehicle,
+
         @Positive(message = "Price must be positive")
-        double price,
+        Double price,
 
         @Positive(message = "Available places must be positive")
-        int availablePlaces,
+        Integer availablePlaces,
+
+        @NotNull(message = "expedion status must be specified")
+        Boolean doExpedition,
+
+        @Positive(message = "Max weight must be positive")
+        Double maxWeight,
 
         @NotNull(message = "UserId required")
         long userId

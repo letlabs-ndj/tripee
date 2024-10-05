@@ -30,9 +30,17 @@ public class Ride {
     @JoinColumn(name = "arr_id")
     private Place arrivalPlace;
 
-    private double price;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 
-    private int availablePlaces;
+    private Double price;
+
+    private Integer availablePlaces;
+
+    private Boolean doExpedition;
+
+    private Double maxWeight;
 
     @Enumerated(EnumType.STRING)
     private RideStatus status;
