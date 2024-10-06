@@ -1,6 +1,7 @@
 package com.lameute.ride_service.service;
 
 import com.lameute.ride_service.dto.RideRequest;
+import com.lameute.ride_service.exception.InvalidUserException;
 import com.lameute.ride_service.exception.RideNotFoundException;
 import com.lameute.ride_service.exception.UserNotFoundEXception;
 import com.lameute.ride_service.model.Ride;
@@ -44,8 +45,13 @@ public class RideService {
         Ride existingRide = rideRepo.findById(idRide) // We get the the existing ride object if it exist
                 .orElseThrow(()-> new RideNotFoundException("No ride with id : "+idRide+" found"));
 
-        rideMapper.mergeRide(existingRide, rideRequest); // We update the existing ride object with data from the the rideRequest object
-        return rideRepo.save(existingRide); // We save back the existing object with updated data
+        if (rideRequest.userId() == existingRide.getUserId()){ // check if the user ids match
+            rideMapper.mergeRide(existingRide, rideRequest); // if it's the case we update the existing ride object with data from the the rideRequest object
+            return rideRepo.save(existingRide); // We save back the existing object with updated data
+        }else {
+            throw new InvalidUserException("User not authorized to update this ride data since id doesn't match");
+        }
+
     }
 
     /*get all rides for a particular user */
