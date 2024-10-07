@@ -1,6 +1,7 @@
 package com.lameute.ride_service.controller;
 
 import com.lameute.ride_service.dto.RideRequest;
+import com.lameute.ride_service.dto.RideResponse;
 import com.lameute.ride_service.model.Ride;
 import com.lameute.ride_service.service.FileStorageService;
 import com.lameute.ride_service.service.RideService;
@@ -90,8 +91,8 @@ public class RideController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Ride>> searchRides(@RequestParam("departurePlace") String departurePlace,
-                                                    @RequestParam("arrivalPlace") String arrivalPlace){
+    public ResponseEntity<List<RideResponse>> searchRides(@RequestParam("departurePlace") String departurePlace,
+                                                          @RequestParam("arrivalPlace") String arrivalPlace){
         return new ResponseEntity<>(rideService.searchRide(departurePlace, arrivalPlace), HttpStatus.OK);
     }
 }

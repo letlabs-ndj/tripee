@@ -1,5 +1,6 @@
 package com.lameute.account_service.controller;
 
+import com.lameute.account_service.dto.UserResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,7 +56,7 @@ public class UserController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById (@PathVariable("id") long id) {
+    public ResponseEntity<UserResponse> getUserById (@PathVariable("id") long id) {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 

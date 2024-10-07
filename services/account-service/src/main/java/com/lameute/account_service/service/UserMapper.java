@@ -1,5 +1,6 @@
 package com.lameute.account_service.service;
 
+import com.lameute.account_service.dto.UserResponse;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,14 @@ public class UserMapper {
         user.setPhoneNumber(userRequest.phoneNumber());
 
         return user;
+    }
+
+    public UserResponse toUserResponse(User user){
+        return new UserResponse(
+                user.getUsername(),
+                user.getEmail(),
+                user.getPhoneNumber()
+        );
     }
 
     /*converts User to UserRequest to be send as response entity */

@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     username: lameute
-    url: jdbc:postgresql://localhost:5434/ride_db
+    url: jdbc:postgresql://localhost:5437/ride_db
     password: lameutepass
     driver-class-name: org.postgresql.Driver
   jpa:

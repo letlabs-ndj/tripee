@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.lameute.ride_service.dto.RideRequest;
+import com.lameute.ride_service.dto.RideResponse;
+import com.lameute.ride_service.dto.UserResponse;
 import com.lameute.ride_service.model.Ride;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +75,20 @@ public class RideMapper {
         if(rideRequest.availablePlaces() != null){
             ride.setAvailablePlaces(rideRequest.availablePlaces());
         }
+    }
+
+    public RideResponse toRideResponse(Ride ride, UserResponse userResponse) {
+        return new RideResponse(
+                ride.getDepartureDate(),
+                ride.getDepartureTime(),
+                ride.getDeparturePlace(),
+                ride.getArrivalPlace(),
+                ride.getVehicle(),
+                ride.getPrice(),
+                ride.getAvailablePlaces(),
+                ride.getDoExpedition(),
+                ride.getMaxWeight(),
+                userResponse
+        );
     }
 }

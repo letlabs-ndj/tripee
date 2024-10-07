@@ -2,6 +2,7 @@ package com.lameute.account_service.service;
 
 import java.util.Optional;
 
+import com.lameute.account_service.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,10 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    public User getUserById(long id){
-        return userRepo.findById(id).orElseThrow(()->new UserNotFoundException(id));
+    public UserResponse getUserById(long id){
+        UserResponse userResponse = userMapper.toUserResponse(userRepo.findById(id)
+                                                .orElseThrow(()->new UserNotFoundException(id)));
+        return userResponse;
     }
 
     public User updateUser(UserRequest userRequest, long id){

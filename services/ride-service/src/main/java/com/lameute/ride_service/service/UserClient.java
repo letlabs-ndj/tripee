@@ -1,5 +1,6 @@
 package com.lameute.ride_service.service;
 
+import com.lameute.ride_service.dto.UserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,5 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface UserClient {
     @GetMapping("/exists/{idUser}")
     boolean checkUser(@PathVariable("idUser") long idUser);
+
+    @GetMapping("/{idUser}")
+    UserResponse getUserById(@PathVariable("idUser") long idUser);
 
 }

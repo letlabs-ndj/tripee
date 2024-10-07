@@ -1,6 +1,7 @@
 package com.lameute.ride_service.service;
 
 import com.lameute.ride_service.dto.RideRequest;
+import com.lameute.ride_service.dto.RideResponse;
 import com.lameute.ride_service.exception.InvalidUserException;
 import com.lameute.ride_service.exception.RideNotFoundException;
 import com.lameute.ride_service.exception.UserNotFoundEXception;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,11 +65,16 @@ public class RideService {
     }
 
     /*Search rides */
-   public List<Ride> searchRide(String departurePlace, String arrivalPlace){
+   public List<RideResponse> searchRide(String departurePlace, String arrivalPlace){
        List<Ride> rides = rideRepo.searchRide(departurePlace,arrivalPlace)
                .orElseThrow(()-> new RideNotFoundException("No rides that suit this route found"));
 
-       return rides;
+       List<RideResponse> rideResponses = new ArrayList<>();
+       for (Ride ride : rides) {
+           var user = userClient.getUserById(ride.getUserId());
+           rideResponses.add(rideMapper.toRideResponse(ride,user));
+       }
+       return rideResponses;
    }
 
     /*delete a ride */
