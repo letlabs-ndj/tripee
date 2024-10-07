@@ -1,12 +1,14 @@
 package com.lameute.reservation_service.model;
 
+import com.lameute.reservation_service.model.Enums.ReservationStatus;
+import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -14,5 +16,23 @@ import lombok.NoArgsConstructor;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Reservation {
-    
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
+
+    private LocalDate reservationDate;
+
+    private LocalTime reservationTime;
+
+    private Integer reservedPlaces;
+
+    private Double price;
+
+    private Boolean hasLuggage;
+
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus;
+
+    private long userId;
+
+    private long rideId;
 }
