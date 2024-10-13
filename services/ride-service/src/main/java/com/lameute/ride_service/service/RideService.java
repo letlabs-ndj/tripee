@@ -84,16 +84,20 @@ public class RideService {
 
     /*start a ride */
     public void startRide(long idRide){
-        rideRepo.startRide(idRide);
+        rideRepo.updateRideStatus(idRide,RideStatus.IN_PROGRESS.name());
     }
 
     /*terminate a ride */
     public void terminateRide(long idRide){
-        rideRepo.terminateRide(idRide);
+        rideRepo.updateRideStatus(idRide,RideStatus.TERMINATED.name());
     }
 
     /* Check if user exist*/
-    public boolean userExist(long idUser){
+    private boolean userExist(long idUser){
         return userClient.checkUser(idUser);
+    }
+
+    public boolean existById(long id) {
+        return rideRepo.existsById(id);
     }
 }

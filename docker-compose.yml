@@ -29,6 +29,21 @@ services:
       - tripee-net
     restart: unless-stopped
 
+  reservation-service:
+    container_name: reservation_db
+    image: postgres
+    environment:
+      POSTGRES_USER: lameute
+      POSTGRES_PASSWORD: lameutepass
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5438:5432"
+    networks:
+      - tripee-net
+    restart: unless-stopped
+
 networks:
   tripee-net:
     driver: bridge

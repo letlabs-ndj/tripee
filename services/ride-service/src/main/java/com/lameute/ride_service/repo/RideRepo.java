@@ -17,12 +17,8 @@ public interface RideRepo extends JpaRepository<Ride, Long> {
     Optional<List<Ride>> findByUserId(Long userId);
 
     @Modifying(clearAutomatically = true) @Transactional
-    @Query(nativeQuery = true, value = "UPDATE rides SET status = 'IN_PROGRESS' WHERE id = :idRide")
-    void startRide(@Param("idRide") long idRide);
-
-    @Modifying(clearAutomatically = true) @Transactional
-    @Query(nativeQuery = true, value = "UPDATE rides SET status = 'TERMINATED' WHERE id = :idRide")
-    void terminateRide(@Param("idRide") long idRide);
+    @Query(nativeQuery = true, value = "UPDATE rides SET status = :status WHERE id = :idRide")
+    void updateRideStatus(@Param("idRide") long idRide, @Param("status") String status);
 
     @Query(value = "SELECT r FROM Ride r WHERE "+
                 "r.status= 'ON_HOLD' "+
@@ -32,4 +28,5 @@ public interface RideRepo extends JpaRepository<Ride, Long> {
                 "OR (r.departurePlace.name = :departurePlace AND r.arrivalPlace.town = :arrivalPlace))")
     Optional<List<Ride>> searchRide(@Param("departurePlace") String departurePlace,
                                 @Param("arrivalPlace") String arrivalPlace);
+
 }

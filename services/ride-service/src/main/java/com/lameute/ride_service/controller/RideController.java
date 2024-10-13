@@ -70,7 +70,7 @@ public class RideController {
         return rideService.updateRide(rideRequest,idRide);
     }
 
-    @GetMapping("/all/{idUser}")
+    @GetMapping("/user/{idUser}/all")
     public List<Ride> getAllUserRides(@PathVariable("idUser") long idUser){
         return rideService.getAllRidesByUserId(idUser);
     }
@@ -94,5 +94,10 @@ public class RideController {
     public ResponseEntity<List<RideResponse>> searchRides(@RequestParam("departurePlace") String departurePlace,
                                                           @RequestParam("arrivalPlace") String arrivalPlace){
         return new ResponseEntity<>(rideService.searchRide(departurePlace, arrivalPlace), HttpStatus.OK);
+    }
+
+    @GetMapping("/exists/{id}")
+    public ResponseEntity<Boolean> checkUser(@PathVariable("id") long id) {
+        return new ResponseEntity<>(rideService.existById(id), HttpStatus.OK);
     }
 }

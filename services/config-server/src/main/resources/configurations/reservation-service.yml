@@ -1,9 +1,9 @@
 server:
-  port: 8086
+  port: 8087
 spring:
   datasource:
     username: lameute
-    url: jdbc:postgresql://localhost:5437/ride_db
+    url: jdbc:postgresql://localhost:5438/reservation_db
     password: lameutepass
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -18,6 +18,7 @@ spring:
 application:
   config:
     account-url: http://localhost:8085/user
+    ride-url: http://localhost:8086/ride
 
 upload:
   path: vehicle-images
