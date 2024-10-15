@@ -15,14 +15,13 @@ import io.micrometer.common.util.StringUtils;
  */
 @Service
 public class UserMapper {
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
     
     /*converts UserRequest to User from response entity */
     public User toUser(UserRequest userRequest){
         User user = new User();
         user.setUsername(userRequest.username());
         user.setEmail(userRequest.email());
-        user.setPassword(passwordEncoder.encode(userRequest.password()));
+        user.setPassword(new BCryptPasswordEncoder(10).encode(userRequest.password()));
         user.setPhoneNumber(userRequest.phoneNumber());
 
         return user;
@@ -30,6 +29,7 @@ public class UserMapper {
 
     public UserResponse toUserResponse(User user){
         return new UserResponse(
+                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPhoneNumber()
@@ -57,7 +57,7 @@ public class UserMapper {
             user.setUsername(userRequest.username());
         } 
         if(StringUtils.isNotBlank(userRequest.password())){
-            user.setPassword(passwordEncoder.encode(userRequest.password()));
+            user.setPassword(new BCryptPasswordEncoder(10).encode(userRequest.password()));
         } 
         if(StringUtils.isNotBlank(userRequest.phoneNumber())){
             user.setPhoneNumber(userRequest.phoneNumber());

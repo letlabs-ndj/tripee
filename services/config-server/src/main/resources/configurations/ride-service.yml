@@ -17,7 +17,7 @@ spring:
 
 application:
   config:
-    account-url: http://localhost:8085/user
+    account-url: http://localhost:8085/users
 
 upload:
   path: vehicle-images

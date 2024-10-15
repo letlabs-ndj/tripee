@@ -20,27 +20,9 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public User createUser(UserRequest userRequest){
-        User user = userMapper.toUser(userRequest);
-        Optional<User> userObj = userRepo.findByEmail(user.getEmail());
-        if (!userObj.isEmpty()) {
-            throw new EmailAlreadyUsedException();
-        }
-        return userRepo.save(user);
-    }
-
     public UserResponse getUserById(long id){
-        UserResponse userResponse = userMapper.toUserResponse(userRepo.findById(id)
-                                                .orElseThrow(()->new UserNotFoundException(id)));
-        return userResponse;
-    }
-
-    public User updateUser(UserRequest userRequest, long id){
-        User user = userRepo.findById(id)
-                    .orElseThrow(()-> new UserNotFoundException(id));
-
-        userMapper.mergeUser(user, userRequest);
-        return userRepo.save(user);
+        return userMapper.toUserResponse(userRepo.findById(id)
+                                                .orElseThrow(()->new UserNotFoundException("L'utilisateur avec l'identifiant : "+id+" est introuvable")));
     }
 
     public boolean existById(long id) {

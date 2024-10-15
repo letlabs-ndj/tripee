@@ -1,9 +1,8 @@
 package com.lameute.account_service.dto;
 
-public record UserResponse(
+public record AuthenticationResponse(
         long id,
         String username,
-        String email,
-        String phoneNumber
+        String token
 ) {
 }
