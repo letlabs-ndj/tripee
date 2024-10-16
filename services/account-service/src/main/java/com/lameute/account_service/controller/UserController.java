@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lameute.account_service.dto.UserRequest;
 import com.lameute.account_service.exceptions.OtpNotSentException;
-import com.lameute.account_service.exceptions.OtpVerificationFailedException;
-import com.lameute.account_service.model.User;
 import com.lameute.account_service.service.OtpService;
 import com.lameute.account_service.service.UserService;
 import com.twilio.exception.ApiException;
@@ -71,9 +69,9 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/auth/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<AuthenticationResponse> updateUser (@RequestBody UserRequest userRequest,@PathVariable("id") long id){
-        return new ResponseEntity<>(authService.updateUser(userRequest, id), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(userService.updateUser(userRequest, id), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/exists/{id}")
