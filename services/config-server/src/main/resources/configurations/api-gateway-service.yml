@@ -1,0 +1,39 @@
+server:
+  port: 8089
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: account-service
+          uri: lb:http://ACCOUNT-SERVICE
+          predicates:
+            - Path=/users/**
+        - id: ride-service
+          uri: lb:http://RIDE-SERVICE
+          predicates:
+            - Path=/rides/**
+        - id: reservation-service
+          uri: lb:http://RESERVATION-SERVICE
+          predicates:
+            - Path=/reservations/**
+  datasource:
+    username: lameute
+    url: jdbc:postgresql://localhost:5433/account_db
+    password: lameutepass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+  main:
+    web-application-type: reactive
+
+secret:
+  signing_key: An23aU8bnGb3TzHx22ybf4tEA5jRBRf1VxJ0InUdBg6lGgkvmLKsKVDUpRsmZEXQ

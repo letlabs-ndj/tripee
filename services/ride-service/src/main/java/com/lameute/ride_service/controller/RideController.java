@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import java.util.List;
 
 @RestController
-@RequestMapping("/ride")
+@RequestMapping("/rides")
 public class RideController {
     @Autowired
     private RideService rideService;

@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import com.lameute.ride_service.service.FileStorageService;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -26,5 +31,20 @@ public class RideServiceApplication {
 		return (args) -> {
 			storageService.init(); // We create vehicle images directory on app launching
 		};
+	}
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+
+		configuration.setAllowedOrigins(List.of("http://localhost:8086"));
+		configuration.setAllowedMethods(List.of("GET","POST"));
+		configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+		source.registerCorsConfiguration("/**",configuration);
+
+		return source;
 	}
 }
