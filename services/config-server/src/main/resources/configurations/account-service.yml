@@ -18,7 +18,7 @@ spring:
 twilio:
   account_sid: AC8ebbb7b9471645d7de3fabf193e7a545
   auth_token: b05f1b2d4eca37d84d27d896c71f5c12
-  service_id: VA89112212006be1cdd32f19457b88549f
+  service_id: VA3b3114f3d856d54a30840d489c96110c
 
 secret:
   signing_key: An23aU8bnGb3TzHx22ybf4tEA5jRBRf1VxJ0InUdBg6lGgkvmLKsKVDUpRsmZEXQ

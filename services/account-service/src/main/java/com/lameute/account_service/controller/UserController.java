@@ -3,6 +3,7 @@ package com.lameute.account_service.controller;
 import com.lameute.account_service.dto.AuthenticationRequest;
 import com.lameute.account_service.dto.AuthenticationResponse;
 import com.lameute.account_service.dto.UserResponse;
+import com.lameute.account_service.exceptions.OtpVerificationFailedException;
 import com.lameute.account_service.service.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +53,11 @@ public class UserController {
 
     @PostMapping("/auth/register/{otpCode}")
     public ResponseEntity<AuthenticationResponse> registerUser (@PathVariable("otpCode") String otpCode, @RequestBody @Valid UserRequest userRequest) throws ApiException{
-//        if (otpService.verifyOtp(userRequest.phoneNumber(),otpCode)) {
+        if (otpService.verifyOtp(userRequest.phoneNumber(),otpCode)) {
             return new ResponseEntity<>(authService.registerUser(userRequest),HttpStatus.CREATED);
-//        }else{
-//            throw new OtpVerificationFailedException();
-//        }
+        }else{
+            throw new OtpVerificationFailedException();
+        }
     }
 
     @PostMapping("/auth/login")
