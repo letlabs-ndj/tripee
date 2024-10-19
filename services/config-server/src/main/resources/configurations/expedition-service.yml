@@ -1,0 +1,24 @@
+server:
+  port: 8084
+spring:
+  datasource:
+    username: lameute
+    url: jdbc:postgresql://localhost:5434/expedition_db
+    password: lameutepass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+
+application:
+  config:
+    account-url: http://localhost:8085/users
+    ride-url: http://localhost:8086/rides
+
+upload:
+  path: packet-images

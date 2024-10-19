@@ -19,9 +19,9 @@ public class Expedition {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    private LocalDate reservationDate;
+    private LocalDate expeditionDate;
 
-    private LocalTime reservationTime;
+    private LocalTime expeditionTime;
 
     private Double price;
 
@@ -30,7 +30,7 @@ public class Expedition {
     @Enumerated(EnumType.STRING)
     private ExpeditionStatus expeditionStatus;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Packet packet;
 
     private long userId;

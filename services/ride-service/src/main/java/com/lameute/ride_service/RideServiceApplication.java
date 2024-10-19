@@ -32,19 +32,4 @@ public class RideServiceApplication {
 			storageService.init(); // We create vehicle images directory on app launching
 		};
 	}
-
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
-
-		configuration.setAllowedOrigins(List.of("http://localhost:8086"));
-		configuration.setAllowedMethods(List.of("GET","POST"));
-		configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
-
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-		source.registerCorsConfiguration("/**",configuration);
-
-		return source;
-	}
 }

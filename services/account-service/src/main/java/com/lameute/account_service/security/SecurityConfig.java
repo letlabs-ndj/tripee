@@ -38,7 +38,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->{
-                   registry.requestMatchers("/users/auth/**").permitAll();
+                   registry.requestMatchers("/users/**").permitAll();
                    registry.anyRequest().authenticated();
                 })
                 .sessionManagement(sessionManager ->{

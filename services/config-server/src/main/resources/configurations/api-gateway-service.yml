@@ -19,6 +19,10 @@ spring:
           uri: lb:http://RESERVATION-SERVICE
           predicates:
             - Path=/reservations/**
+        - id: expedition-service
+          uri: lb:http://EXPEDITION-SERVICE
+          predicates:
+            - Path=/expeditions/**
   datasource:
     username: lameute
     url: jdbc:postgresql://localhost:5433/account_db
