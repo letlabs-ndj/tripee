@@ -4,6 +4,7 @@ import com.lameute.ride_service.dto.*;
 import com.lameute.ride_service.exception.InvalidUserException;
 import com.lameute.ride_service.exception.RideNotFoundException;
 import com.lameute.ride_service.exception.UserNotFoundEXception;
+import com.lameute.ride_service.kafka.PassengerList;
 import com.lameute.ride_service.model.Ride;
 import com.lameute.ride_service.model.Enum.RideStatus;
 import com.lameute.ride_service.repo.RideRepo;

@@ -1,4 +1,6 @@
-package com.lameute.ride_service.dto;
+package com.lameute.ride_service.kafka;
+
+import com.lameute.ride_service.dto.UserResponse;
 
 import java.util.List;
 
