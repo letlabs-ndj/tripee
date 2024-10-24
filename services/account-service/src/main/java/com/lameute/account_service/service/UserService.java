@@ -48,4 +48,9 @@ public class UserService {
                 token
         );
     }
+
+    public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email)
+                .orElseThrow(()-> new UserNotFoundException("No user with email : "+email+" not found"));
+    }
 }

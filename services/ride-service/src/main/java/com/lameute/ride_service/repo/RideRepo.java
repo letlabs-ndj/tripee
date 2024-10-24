@@ -22,11 +22,20 @@ public interface RideRepo extends JpaRepository<Ride, Long> {
 
     @Query(value = "SELECT r FROM Ride r WHERE "+
                 "r.status= 'ON_HOLD' "+
-                "AND ((r.departurePlace.name = :departurePlace AND r.arrivalPlace.name = :arrivalPlace) "+
-                "OR (r.departurePlace.town = :departurePlace AND r.arrivalPlace.name = :arrivalPlace) "+
-                "OR (r.departurePlace.town = :departurePlace AND r.arrivalPlace.town = :arrivalPlace) "+
-                "OR (r.departurePlace.name = :departurePlace AND r.arrivalPlace.town = :arrivalPlace))")
+                "AND ((r.departurePlace.name LIKE :departurePlace% AND r.arrivalPlace.name LIKE :arrivalPlace%) "+
+                "OR (r.departurePlace.town LIKE :departurePlace% AND r.arrivalPlace.name LIKE :arrivalPlace%) "+
+                "OR (r.departurePlace.town LIKE :departurePlace% AND r.arrivalPlace.town LIKE :arrivalPlace%) "+
+                "OR (r.departurePlace.name LIKE :departurePlace% AND r.arrivalPlace.town LIKE :arrivalPlace%))")
     Optional<List<Ride>> searchRide(@Param("departurePlace") String departurePlace,
                                 @Param("arrivalPlace") String arrivalPlace);
 
+    @Modifying(clearAutomatically = true) @Transactional
+    @Query(nativeQuery = true, value = "UPDATE rides SET available_places = available_places + :numberOfPlaces WHERE id = :idRide")
+    void restoreAvailablePlaces(@Param("idRide") long idRide,
+                                @Param("numberOfPlaces") int numberOfPlaces);
+
+    @Modifying(clearAutomatically = true) @Transactional
+    @Query(nativeQuery = true, value = "UPDATE rides SET available_places = available_places - :numberOfPlaces WHERE id = :idRide")
+    void removeAvailablePlaces(@Param("idRide") long idRide,
+                                @Param("numberOfPlaces") int numberOfPlaces);
 }

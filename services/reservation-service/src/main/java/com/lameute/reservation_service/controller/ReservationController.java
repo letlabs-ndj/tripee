@@ -27,6 +27,11 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.getRideReservations(rideId), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/ride/{rideId}/accepted")
+    public ResponseEntity<List<ReservationResponse>> getRideAcceptedReservations(@PathVariable("rideId") long rideId){
+        return new ResponseEntity<>(reservationService.getRideAcceptedReservations(rideId), HttpStatus.ACCEPTED);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Reservation> createReservation(@RequestBody ReservationRequest request){
         return new ResponseEntity<>(reservationService.createReservation(request),HttpStatus.CREATED);
@@ -42,13 +47,22 @@ public class ReservationController {
         reservationService.deleteReservation(reservationId);
     }
 
-    @PutMapping("/accept/{idRes}")
-    public void acceptReservation(@PathVariable("idRes") long reservationId){
-        reservationService.acceptReservation(reservationId);
+    @PutMapping("/accept/{idRes}/rides/{idRide}/{numberOfPlaces}")
+    public void acceptReservation(@PathVariable("idRes") long reservationId,
+                                  @PathVariable("idRide") long rideId,
+                                  @PathVariable("numberOfPlaces") int numberOfPlaces){
+        reservationService.acceptReservation(reservationId,rideId,numberOfPlaces);
     }
 
     @PutMapping("/refuse/{idRes}")
     public void refuseReservation(@PathVariable("idRes") long reservationId){
         reservationService.refuseReservation(reservationId);
+    }
+
+    @PutMapping("/cancel/{idRes}/rides/{idRide}/{numberOfPlaces}")
+    public void cancelReservation(@PathVariable("idRes") long reservationId,
+                                  @PathVariable("idRide") long rideId,
+                                  @PathVariable("numberOfPlaces") int numberOfPlaces){
+        reservationService.cancelReservation(reservationId,rideId,numberOfPlaces);
     }
 }

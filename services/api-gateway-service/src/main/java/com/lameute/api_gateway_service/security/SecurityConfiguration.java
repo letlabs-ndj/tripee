@@ -46,7 +46,7 @@ public class SecurityConfiguration {
                 .exceptionHandling(e -> e.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
 
-                        .pathMatchers("/users/**").permitAll()
+                        .pathMatchers("/eureka/**","/users/**","/swagger-ui.html").permitAll()
                         .anyExchange().authenticated())
                 .addFilterBefore(jwtFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)

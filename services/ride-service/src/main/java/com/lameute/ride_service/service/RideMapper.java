@@ -79,6 +79,7 @@ public class RideMapper {
 
     public RideResponse toRideResponse(Ride ride, UserResponse userResponse) {
         return new RideResponse(
+                ride.getId(),
                 ride.getDepartureDate(),
                 ride.getDepartureTime(),
                 ride.getDeparturePlace(),
@@ -88,6 +89,7 @@ public class RideMapper {
                 ride.getAvailablePlaces(),
                 ride.getDoExpedition(),
                 ride.getMaxWeight(),
+                ride.getStatus(),
                 userResponse
         );
     }

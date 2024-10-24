@@ -47,6 +47,19 @@ public class ReservationService {
         return reservationResponses;
     }
 
+    public List<ReservationResponse> getRideAcceptedReservations(long rideId) {
+        List<Reservation> reservations =  reservationRepo.findAcceptedReservations(rideId)
+                .orElseThrow(()->new ReservationNotFoundException("No accepted reservation found for ride with id : "+rideId));
+
+        List<ReservationResponse> reservationResponses = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+            var user = userClient.getUserById(reservation.getUserId());
+            reservationResponses.add(reservationMapper.toReservationResponse(reservation,user));
+        }
+
+        return reservationResponses;
+    }
+
     public Reservation createReservation(ReservationRequest request){
         if (!userExist(request.userId())){
             throw new UserNotFoundEXception("No user with id : "+request.userId()+" found");
@@ -76,12 +89,18 @@ public class ReservationService {
         reservationRepo.deleteById(reservationId);
     }
 
-    public void acceptReservation(long reservationId){
+    public void acceptReservation(long reservationId,long rideId, int numberOfPlaces){
+        rideClient.removeAvailablePlaces(rideId,numberOfPlaces);
         reservationRepo.updateReservationStatus(reservationId, ReservationStatus.ACCEPTED.name());
     }
 
     public void refuseReservation(long reservationId){
         reservationRepo.updateReservationStatus(reservationId, ReservationStatus.REFUSED.name());
+    }
+
+    public void cancelReservation(long reservationId, long rideId, int numberOfPlaces) {
+        rideClient.restoreAvailablePlaces(rideId,numberOfPlaces);
+        reservationRepo.updateReservationStatus(reservationId, ReservationStatus.ON_HOLD.name());
     }
 
     private boolean userExist(long userId){
@@ -91,4 +110,5 @@ public class ReservationService {
     private boolean rideExist(long rideId){
         return rideClient.checkRide(rideId);
     }
+
 }

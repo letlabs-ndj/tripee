@@ -1,9 +1,7 @@
-server:
-  port: 8085
 spring:
   datasource:
     username: lameute
-    url: jdbc:postgresql://localhost:5433/account_db
+    url: jdbc:postgresql://localhost:5433/chat_db
     password: lameutepass
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -15,10 +13,9 @@ spring:
       ddl-auto: update
     show-sql: 'true'
 
-twilio:
-  account_sid: AC8ebbb7b9471645d7de3fabf193e7a545
-  auth_token: b05f1b2d4eca37d84d27d896c71f5c12
-  service_id: VAabc1aec8fbaf59b014afd2062585597b
+application:
+  config:
+    account-url: http://localhost:8085/users
 
 secret:
   signing_key: An23aU8bnGb3TzHx22ybf4tEA5jRBRf1VxJ0InUdBg6lGgkvmLKsKVDUpRsmZEXQ

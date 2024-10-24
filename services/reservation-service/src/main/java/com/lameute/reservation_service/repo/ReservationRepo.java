@@ -20,4 +20,7 @@ public interface ReservationRepo extends JpaRepository<Reservation, Long> {
     @Modifying(clearAutomatically = true) @Transactional
     @Query(nativeQuery = true, value = "UPDATE reservations SET reservation_status = :status WHERE id = :idRes")
     void updateReservationStatus(@Param("idRes") long reservationId, @Param("status") String status);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM reservations WHERE reservation_status = 'ACCEPTED' WHERE id = :rideId")
+    Optional<List<Reservation>> findAcceptedReservations(@Param("rideId") long rideId);
 }

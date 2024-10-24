@@ -1,14 +1,9 @@
 package com.lameute.expedition_service.service;
 
-import com.lameute.expedition_service.dto.ExpeditionRequest;
 import com.lameute.expedition_service.dto.PacketRequest;
-import com.lameute.expedition_service.model.Expedition;
 import com.lameute.expedition_service.model.Packet;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Service
 public class PacketMapper {

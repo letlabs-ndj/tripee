@@ -3,6 +3,7 @@ package com.lameute.reservation_service.service;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @FeignClient(
         name = "ride-service",
@@ -11,4 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface RideClient {
     @GetMapping("/exists/{idUser}")
     boolean checkRide(@PathVariable("idUser") long idUser);
+
+    @PutMapping("/id/{idRide}/availablePlaces/restore/{numberOfPlaces}")
+    void restoreAvailablePlaces(@PathVariable("idRide") long idRide,
+                                @PathVariable("numberOfPlaces") int numberOfPlaces);
+
+    @PutMapping("/id/{idRide}/availablePlaces/remove/{numberOfPlaces}")
+    void removeAvailablePlaces(@PathVariable("idRide") long idRide,
+                               @PathVariable("numberOfPlaces") int numberOfPlaces);
 }

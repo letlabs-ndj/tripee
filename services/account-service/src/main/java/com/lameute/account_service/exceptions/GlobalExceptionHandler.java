@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -41,5 +42,12 @@ public class GlobalExceptionHandler {
         String message = "Un problème est survenu lors de l'envoi de votre requete veillez verifier vos informations";
         ErrorDetails errorDetails = new ErrorDetails(LocalDate.now(), message, request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> handleInvalidUserException(BadCredentialsException ex, WebRequest request) {
+        String message = "Erreure au niveau de mot de passe ou nom d'utilisateur";
+        ErrorDetails errorDetails = new ErrorDetails(LocalDate.now(), message, request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
     }
 }

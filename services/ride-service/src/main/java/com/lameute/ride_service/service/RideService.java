@@ -1,7 +1,6 @@
 package com.lameute.ride_service.service;
 
-import com.lameute.ride_service.dto.RideRequest;
-import com.lameute.ride_service.dto.RideResponse;
+import com.lameute.ride_service.dto.*;
 import com.lameute.ride_service.exception.InvalidUserException;
 import com.lameute.ride_service.exception.RideNotFoundException;
 import com.lameute.ride_service.exception.UserNotFoundEXception;
@@ -12,6 +11,7 @@ import com.lameute.ride_service.repo.RideRepo;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +28,12 @@ public class RideService {
     
     @Autowired
     private UserClient userClient;
+
+    @Autowired
+    private ReservationClient reservationClient;
+
+    @Autowired
+    private KafkaTemplate<String, PassengerList> kafkaTemplate;
 
     /*create new ride */
     public Ride saveRide(RideRequest rideRequest, String imageUrl) {
@@ -60,7 +66,6 @@ public class RideService {
     public List<Ride> getAllRidesByUserId(long userId){
         List<Ride> rides = rideRepo.findByUserId(userId)
                         .orElseThrow(()-> new RideNotFoundException("No rides for user with id : "+userId));
-
         return rides;
     }
 
@@ -85,6 +90,15 @@ public class RideService {
     /*start a ride */
     public void startRide(long idRide){
         rideRepo.updateRideStatus(idRide,RideStatus.IN_PROGRESS.name());
+        List<ReservationResponse> reservations = reservationClient.getRideAcceptedReservations(idRide);
+        List<UserResponse> users = new ArrayList<>();
+
+        for (ReservationResponse reservation : reservations) {
+            users.add(reservation.user());
+        }
+        PassengerList passengerList = new PassengerList(users);
+
+        kafkaTemplate.send("notification-topic",passengerList);
     }
 
     /*terminate a ride */
@@ -99,5 +113,13 @@ public class RideService {
 
     public boolean existById(long id) {
         return rideRepo.existsById(id);
+    }
+
+    public void restoreAvailablePlaces(long idRide, int numberOfPlaces) {
+        rideRepo.restoreAvailablePlaces(idRide,numberOfPlaces);
+    }
+
+    public void removeAvailablePlaces(long idRide, int numberOfPlaces) {
+        rideRepo.removeAvailablePlaces(idRide,numberOfPlaces);
     }
 }

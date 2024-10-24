@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,8 +28,12 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     @Autowired
     private JwtAuthenticationFilter jwtFilter;
+
+//    public static String[] SWAGGER_URL_PATHS = new String[] { "/swagger-ui/index.html", "/swagger-resources/**",
+//            "/v2/api-docs**", "/webjars/**", "/swaggerfox.js", "/swagger-ui/**" };
 
     @Autowired
     private CustomUserDetailService userDetailService;

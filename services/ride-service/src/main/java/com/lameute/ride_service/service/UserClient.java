@@ -13,6 +13,6 @@ public interface UserClient {
     @GetMapping("/exists/{idUser}")
     boolean checkUser(@PathVariable("idUser") long idUser);
 
-    @GetMapping("/{idUser}")
+    @GetMapping("/id/{idUser}")
     UserResponse getUserById(@PathVariable("idUser") long idUser);
 }

@@ -100,4 +100,16 @@ public class RideController {
     public ResponseEntity<Boolean> checkUser(@PathVariable("id") long id) {
         return new ResponseEntity<>(rideService.existById(id), HttpStatus.OK);
     }
+
+    @PutMapping("/id/{idRide}/availablePlaces/restore/{numberOfPlaces}")
+    public void restoreAvailablePlaces(@PathVariable("idRide") long idRide,
+                                       @PathVariable("numberOfPlaces") int numberOfPlaces) {
+        rideService.restoreAvailablePlaces(idRide,numberOfPlaces);
+    }
+
+    @PutMapping("/id/{idRide}/availablePlaces/remove/{numberOfPlaces}")
+    public void removeAvailablePlaces(@PathVariable("idRide") long idRide,
+                                       @PathVariable("numberOfPlaces") int numberOfPlaces) {
+        rideService.removeAvailablePlaces(idRide,numberOfPlaces);
+    }
 }
