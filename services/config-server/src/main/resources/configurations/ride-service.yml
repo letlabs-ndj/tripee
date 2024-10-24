@@ -20,7 +20,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: PassengerList:com.lameute.ride_service.kafka.PassengerList
+        spring.json.type.mapping: RideInfo:com.lameute.ride_service.kafka.RideInfo
 
 application:
   config:

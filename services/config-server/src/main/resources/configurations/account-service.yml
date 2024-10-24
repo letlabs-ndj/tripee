@@ -16,9 +16,9 @@ spring:
     show-sql: 'true'
 
 twilio:
-  account_sid: AC8ebbb7b9471645d7de3fabf193e7a545
-  auth_token: b05f1b2d4eca37d84d27d896c71f5c12
-  service_id: VAabc1aec8fbaf59b014afd2062585597b
+  account_sid: ACf90a1b3400c4f710647d397191a01334
+  auth_token: 462a32dd14a59d320811b4770e67e3ce
+  service_id: VA379fa37df7250ef621b10b981359e3ec
 
 secret:
   signing_key: An23aU8bnGb3TzHx22ybf4tEA5jRBRf1VxJ0InUdBg6lGgkvmLKsKVDUpRsmZEXQ

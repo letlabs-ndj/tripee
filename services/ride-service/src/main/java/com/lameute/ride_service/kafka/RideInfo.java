@@ -4,7 +4,9 @@ import com.lameute.ride_service.dto.UserResponse;
 
 import java.util.List;
 
-public record PassengerList(
-        List<UserResponse> users
+public record RideInfo(
+        List<UserResponse> users,
+        String departurePlace,
+        String arrivalPlace
 ) {
 }

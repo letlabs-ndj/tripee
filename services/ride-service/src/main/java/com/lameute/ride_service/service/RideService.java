@@ -4,7 +4,7 @@ import com.lameute.ride_service.dto.*;
 import com.lameute.ride_service.exception.InvalidUserException;
 import com.lameute.ride_service.exception.RideNotFoundException;
 import com.lameute.ride_service.exception.UserNotFoundEXception;
-import com.lameute.ride_service.kafka.PassengerList;
+import com.lameute.ride_service.kafka.RideInfo;
 import com.lameute.ride_service.model.Ride;
 import com.lameute.ride_service.model.Enum.RideStatus;
 import com.lameute.ride_service.repo.RideRepo;
@@ -34,7 +34,7 @@ public class RideService {
     private ReservationClient reservationClient;
 
     @Autowired
-    private KafkaTemplate<String, PassengerList> kafkaTemplate;
+    private KafkaTemplate<String, RideInfo> kafkaTemplate;
 
     /*create new ride */
     public Ride saveRide(RideRequest rideRequest, String imageUrl) {
@@ -91,15 +91,24 @@ public class RideService {
     /*start a ride */
     public void startRide(long idRide){
         rideRepo.updateRideStatus(idRide,RideStatus.IN_PROGRESS.name());
+
+        Ride ride = rideRepo.findById(idRide)
+                .orElseThrow(()-> new RideNotFoundException("No ride with id : "+idRide));
+
         List<ReservationResponse> reservations = reservationClient.getRideAcceptedReservations(idRide);
         List<UserResponse> users = new ArrayList<>();
 
         for (ReservationResponse reservation : reservations) {
             users.add(reservation.user());
         }
-        PassengerList passengerList = new PassengerList(users);
 
-        kafkaTemplate.send("notification-topic",passengerList);
+        RideInfo rideInfo = new RideInfo(
+                users,
+                ride.getDeparturePlace().getName(),
+                ride.getArrivalPlace().getName()
+        );
+
+        kafkaTemplate.send("ride-topic",rideInfo);
     }
 
     /*terminate a ride */

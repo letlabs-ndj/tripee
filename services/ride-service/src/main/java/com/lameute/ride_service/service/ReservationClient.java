@@ -16,6 +16,6 @@ import java.util.List;
 public interface ReservationClient {
 
     @GetMapping("/ride/{rideId}/accepted")
-    public List<ReservationResponse> getRideAcceptedReservations(
+    List<ReservationResponse> getRideAcceptedReservations(
             @PathVariable("rideId") long rideId);
 }

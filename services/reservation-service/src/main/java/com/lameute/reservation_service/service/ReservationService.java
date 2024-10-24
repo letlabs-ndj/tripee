@@ -2,6 +2,7 @@ package com.lameute.reservation_service.service;
 
 import com.lameute.reservation_service.dto.ReservationRequest;
 import com.lameute.reservation_service.dto.ReservationResponse;
+import com.lameute.reservation_service.dto.UserResponse;
 import com.lameute.reservation_service.exceptions.InvalidUserException;
 import com.lameute.reservation_service.exceptions.ReservationNotFoundException;
 import com.lameute.reservation_service.exceptions.RideNotFoundException;
@@ -53,7 +54,8 @@ public class ReservationService {
 
         List<ReservationResponse> reservationResponses = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            var user = userClient.getUserById(reservation.getUserId());
+            UserResponse user = userClient.getUserById(reservation.getUserId());
+            System.out.println(user);
             reservationResponses.add(reservationMapper.toReservationResponse(reservation,user));
         }
 
