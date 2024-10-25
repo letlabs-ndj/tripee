@@ -55,7 +55,6 @@ public class ReservationService {
         List<ReservationResponse> reservationResponses = new ArrayList<>();
         for (Reservation reservation : reservations) {
             UserResponse user = userClient.getUserById(reservation.getUserId());
-            System.out.println(user);
             reservationResponses.add(reservationMapper.toReservationResponse(reservation,user));
         }
 

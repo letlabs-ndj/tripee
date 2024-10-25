@@ -20,4 +20,7 @@ public interface ExpeditionRepo extends JpaRepository<Expedition, Long> {
     @Modifying(clearAutomatically = true) @Transactional
     @Query(nativeQuery = true, value = "UPDATE expeditions SET expedition_status = :status WHERE id = :idRes")
     void updateExpeditionStatus(@Param("idRes") long reservationId, @Param("status") String status);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM expeditions WHERE expedition_status = 'ACCEPTED' AND ride_id = :rideId")
+    Optional<List<Expedition>> findAcceptedExpeditions(@Param("rideId") long rideId);
 }

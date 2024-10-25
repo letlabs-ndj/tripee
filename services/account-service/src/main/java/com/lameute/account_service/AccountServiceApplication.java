@@ -10,4 +10,3 @@ AccountServiceApplication {
 		SpringApplication.run(AccountServiceApplication.class, args);
 	}
 }
-//sawd ydew uqqg tvpc

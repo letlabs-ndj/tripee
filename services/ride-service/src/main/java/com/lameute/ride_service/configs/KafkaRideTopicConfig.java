@@ -8,10 +8,21 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaRideTopicConfig {
 
+  /* Configuration of a rideStart kafka topic for message sending*/
   @Bean
-  public NewTopic paymentTopic() {
+  public NewTopic rideStartTopic() {
     return TopicBuilder
-            .name("notification-topic")
+            .name("rideStart-topic")
+            .partitions(10)
+            .replicas(1)
+            .build();
+  }
+
+  /* Configuration of a rideStop kafka topic for message sending*/
+  @Bean
+  public NewTopic rideStopTopic() {
+    return TopicBuilder
+            .name("rideStop-topic")
             .partitions(10)
             .replicas(1)
             .build();

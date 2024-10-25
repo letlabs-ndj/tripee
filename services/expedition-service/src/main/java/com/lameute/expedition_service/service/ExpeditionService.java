@@ -47,6 +47,19 @@ public class ExpeditionService {
         return expeditionResponses;
     }
 
+    public List<ExpeditionResponse> getRideAcceptedReservations(long rideId) {
+        List<Expedition> expeditions =  expeditionRepo.findAcceptedExpeditions(rideId)
+                .orElseThrow(()->new ExpeditionNotFoundException("No accepted expedition found for ride with id : "+rideId));
+
+        List<ExpeditionResponse> expeditionResponses = new ArrayList<>();
+        for (Expedition expedition : expeditions) {
+            var user = userClient.getUserById(expedition.getUserId());
+            expeditionResponses.add(expeditionMapper.toExpeditionResponse(expedition,user));
+        }
+
+        return expeditionResponses;
+    }
+
     public Expedition createExpedition(ExpeditionRequest request, String packetImageUrl){
         if (!userExist(request.userId())){
             throw new UserNotFoundEXception("No user with id : "+request.userId()+" found");

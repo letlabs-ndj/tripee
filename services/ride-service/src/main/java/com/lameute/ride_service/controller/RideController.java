@@ -34,13 +34,16 @@ public class RideController {
     public ResponseEntity<Ride> saveRide(@RequestParam("rideRequest") String requestJson,
                                         @RequestParam("vehicleImage") MultipartFile vehicleImage){
 
-        // constructs vehicle image url
-        String imageUrl = MvcUriComponentsBuilder
-				.fromMethodName(RideController.class, "serveFile", vehicleImage.getOriginalFilename())
-				.build().toString();
+        String imageUrl = "";
+        if (vehicleImage != null){
+            // constructs vehicle image url
+            imageUrl = MvcUriComponentsBuilder
+                    .fromMethodName(RideController.class, "serveFile", vehicleImage.getOriginalFilename())
+                    .build().toString();
 
-        // Store the vehicle image and get the URL
-        fileStorageService.storeFile(vehicleImage);
+            // Store the vehicle image and get the URL
+            fileStorageService.storeFile(vehicleImage);
+        }
 
         // Parse the request JSON String into a RideRequest object
         RideRequest rideRequest = rideMapper.toRideRequest(requestJson);

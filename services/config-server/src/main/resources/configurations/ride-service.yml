@@ -26,6 +26,7 @@ application:
   config:
     account-url: http://localhost:8085/users
     reservation-url: http://localhost:8087/reservations
+    expedition-url: http://localhost:8084/expeditions
 
 upload:
   path: vehicle-images

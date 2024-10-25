@@ -39,6 +39,11 @@ public class ExpeditionController {
         return new ResponseEntity<>(expeditionService.getRideExpeditions(rideId), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/ride/{rideId}/accepted")
+    public ResponseEntity<List<ExpeditionResponse>> getRideAcceptedReservations(@PathVariable("rideId") long rideId){
+        return new ResponseEntity<>(expeditionService.getRideAcceptedReservations(rideId), HttpStatus.ACCEPTED);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Expedition> createExpedition(@RequestParam("expeditionRequest") String requestJson,
                                                        @RequestParam("packetImage") MultipartFile packetImage){
@@ -92,8 +97,8 @@ public class ExpeditionController {
         expeditionService.refuseExpedition(expeditionId);
     }
 
-    @PutMapping("/accept/{idExp}")
-    public void cancelReservation(long reservationId, long expeditionId) {
+    @PutMapping("/cancel/{idExp}")
+    public void cancelReservation(long expeditionId) {
         expeditionService.cancelExxpedition(expeditionId);
     }
 }

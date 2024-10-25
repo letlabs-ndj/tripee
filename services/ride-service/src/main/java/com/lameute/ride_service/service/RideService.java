@@ -34,6 +34,9 @@ public class RideService {
     private ReservationClient reservationClient;
 
     @Autowired
+    private ExpeditionClient expeditionClient;
+
+    @Autowired
     private KafkaTemplate<String, RideInfo> kafkaTemplate;
 
     /*create new ride */
@@ -90,30 +93,65 @@ public class RideService {
 
     /*start a ride */
     public void startRide(long idRide){
-        rideRepo.updateRideStatus(idRide,RideStatus.IN_PROGRESS.name());
+        rideRepo.updateRideStatus(idRide,RideStatus.IN_PROGRESS.name()); // we first update the ride status
 
-        Ride ride = rideRepo.findById(idRide)
+        Ride ride = rideRepo.findById(idRide)  // we get the ride in question to use some of it infos
                 .orElseThrow(()-> new RideNotFoundException("No ride with id : "+idRide));
 
+        // we retrieve all reservations that have been accepted for the particular ride
         List<ReservationResponse> reservations = reservationClient.getRideAcceptedReservations(idRide);
-        List<UserResponse> users = new ArrayList<>();
 
-        for (ReservationResponse reservation : reservations) {
-            users.add(reservation.user());
-        }
+        // we retrieve all expeditions that have been accepted for the particular ride
+        List<ExpeditionResponse> expeditions = expeditionClient.getRideAcceptedExpeditions(idRide);
 
-        RideInfo rideInfo = new RideInfo(
-                users,
-                ride.getDeparturePlace().getName(),
-                ride.getArrivalPlace().getName()
-        );
+        // we construct a new RideInfo object
+        RideInfo rideInfo = getRideInfo(reservations, expeditions, ride);
 
-        kafkaTemplate.send("ride-topic",rideInfo);
+        /* we then send the RideInfo object to the notification service through kafka*/
+        kafkaTemplate.send("rideStart-topic",rideInfo);
     }
 
     /*terminate a ride */
     public void terminateRide(long idRide){
         rideRepo.updateRideStatus(idRide,RideStatus.TERMINATED.name());
+
+        Ride ride = rideRepo.findById(idRide)  // we get the ride in question to use some of it infos
+                .orElseThrow(()-> new RideNotFoundException("No ride with id : "+idRide));
+
+        // we retrieve all reservations that have been accepted for the particular ride
+        List<ReservationResponse> reservations = reservationClient.getRideAcceptedReservations(idRide);
+
+        // we retrieve all expeditions that have been accepted for the particular ride
+        List<ExpeditionResponse> expeditions = expeditionClient.getRideAcceptedExpeditions(idRide);
+
+        // we construct a new RideInfo object
+        RideInfo rideInfo = getRideInfo(reservations, expeditions, ride);
+
+        /* we then send the RideInfo object to the notification service through kafka*/
+        kafkaTemplate.send("rideStop-topic",rideInfo);
+    }
+
+    private static RideInfo getRideInfo(List<ReservationResponse> reservations, List<ExpeditionResponse> expeditions, Ride ride) {
+        List<UserResponse> passengers = new ArrayList<>();
+        List<UserResponse> expeditors = new ArrayList<>();
+
+        /* for each reservation we get the passenger */
+        for (ReservationResponse reservation : reservations) {
+            passengers.add(reservation.user());
+        }
+
+        /* for each expedition we get the expeditor */
+        for (ExpeditionResponse expedition : expeditions) {
+            expeditors.add(expedition.user());
+        }
+
+        /* Then we construct a new RideInfo object */
+        return new RideInfo(
+                passengers,
+                expeditors,
+                ride.getDeparturePlace().getName(),
+                ride.getArrivalPlace().getName()
+        );
     }
 
     /* Check if user exist*/
