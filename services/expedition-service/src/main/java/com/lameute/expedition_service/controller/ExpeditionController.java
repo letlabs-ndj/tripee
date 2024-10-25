@@ -72,23 +72,28 @@ public class ExpeditionController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @PutMapping("/update/{idRes}")
-    public ResponseEntity<Expedition> updateExpedition(@RequestBody ExpeditionRequest request, @PathVariable("idRes") long expeditionId){
+    @PutMapping("/update/{idExp}")
+    public ResponseEntity<Expedition> updateExpedition(@RequestBody ExpeditionRequest request, @PathVariable("idExp") long expeditionId){
         return new ResponseEntity<>(expeditionService.updateExpedition(request,expeditionId),HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/delete/{idRes}")
-    public void deleteExpedition(@PathVariable("idRes") long expeditionId){
+    @DeleteMapping("/delete/{idExp}")
+    public void deleteExpedition(@PathVariable("idExp") long expeditionId){
         expeditionService.deleteExpedition(expeditionId);
     }
 
-    @PutMapping("/accept/{idRes}")
-    public void acceptExpedition(@PathVariable("idRes") long expeditionId){
+    @PutMapping("/accept/{idExp}")
+    public void acceptExpedition(@PathVariable("idExp") long expeditionId){
         expeditionService.acceptExpedition(expeditionId);
     }
 
-    @PutMapping("/refuse/{idRes}")
-    public void refuseExpedition(@PathVariable("idRes") long expeditionId){
+    @PutMapping("/refuse/{idExp}")
+    public void refuseExpedition(@PathVariable("idExp") long expeditionId){
         expeditionService.refuseExpedition(expeditionId);
+    }
+
+    @PutMapping("/accept/{idExp}")
+    public void cancelReservation(long reservationId, long expeditionId) {
+        expeditionService.cancelExxpedition(expeditionId);
     }
 }

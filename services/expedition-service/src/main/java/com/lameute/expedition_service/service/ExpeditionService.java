@@ -86,6 +86,10 @@ public class ExpeditionService {
         expeditionRepo.updateExpeditionStatus(expeditionId, ExpeditionStatus.REFUSED.name());
     }
 
+    public void cancelExxpedition(long expeditionId) {
+        expeditionRepo.updateExpeditionStatus(expeditionId, ExpeditionStatus.ON_HOLD.name());
+    }
+
     private boolean userExist(long userId){
         return userClient.checkUser(userId);
     }
@@ -93,4 +97,5 @@ public class ExpeditionService {
     private boolean rideExist(long rideId){
         return rideClient.checkRide(rideId);
     }
+
 }
