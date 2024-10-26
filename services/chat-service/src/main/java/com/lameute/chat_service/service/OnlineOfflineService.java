@@ -33,6 +33,7 @@ public class OnlineOfflineService {
     if (user == null) return;
     UserDetailsImpl userDetails = getUserDetails(user);
     log.info("{} is online", userDetails.getUsername());
+    log.info("{} is online", userDetails.getId());
     onlineUsers.add(userDetails.getId());
   }
 
@@ -66,10 +67,14 @@ public class OnlineOfflineService {
 
   public void addUserSubscribed(Principal user, String subscribedChannel) {
     UserDetailsImpl userDetails = getUserDetails(user);
-    log.info("{} subscribed to {}", userDetails.getUsername(), subscribedChannel);
-    Set<String> subscriptions = userSubscribed.getOrDefault(userDetails.getId(), new HashSet<>());
-    subscriptions.add(subscribedChannel);
-    userSubscribed.put(userDetails.getId(), subscriptions);
+    if (!isUserSubscribed(userDetails.getId(), subscribedChannel)){
+      System.out.println("not yet subscribed");
+      log.info("{} subscribed to {}", userDetails.getUsername(), subscribedChannel);
+      Set<String> subscriptions = userSubscribed.getOrDefault(userDetails.getId(), new HashSet<>());
+      subscriptions.add(subscribedChannel);
+      userSubscribed.put(userDetails.getId(), subscriptions);
+      System.out.println(userSubscribed);
+    }
   }
 
   public void removeUserSubscribed(Principal user, String subscribedChannel) {
