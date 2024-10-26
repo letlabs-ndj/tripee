@@ -1,5 +1,6 @@
 package com.lameute.ride_service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -11,6 +12,7 @@ public record RideRequest (
         LocalDate departureDate,
 
         @NotNull(message = "Departure time required")
+        @JsonFormat(pattern = "HH:mm")
         LocalTime departureTime,
 
         @NotNull(message = "Departure place required")
