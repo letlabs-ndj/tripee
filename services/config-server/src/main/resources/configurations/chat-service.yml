@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: lameute
-    url: jdbc:postgresql://localhost:5433/chat_db
+    url: jdbc:postgresql://localhost:5436/chat_db
     password: lameutepass
     driver-class-name: org.postgresql.Driver
   jpa:
