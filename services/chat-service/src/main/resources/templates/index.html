@@ -6,11 +6,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script th:inline="javascript">
             var stompClient = null;
-            var token = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbWFpbF91RTIyIiwiaWF0IjoxNzI5ODY2MzU1LCJleHAiOjE3MzAwMzkxNTV9.QcgtfFYF9dI8w3FliY7ZjbNjcYlimX44AQlKwlreDvQSX4NZMNCRGP4oTGO6Dz__"
-          var headers = {
-            Authorization: 'Bearer ' + token
-          };
+           // var token = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbWFpbF91RTIyIiwiaWF0IjoxNzI5ODY2MzU1LCJleHAiOjE3MzAwMzkxNTV9.QcgtfFYF9dI8w3FliY7ZjbNjcYlimX44AQlKwlreDvQSX4NZMNCRGP4oTGO6Dz__"
+// eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJiaXRlY2tAZ21haWwuY29tIiwiaWF0IjoxNzI5ODkyNjY2LCJleHAiOjE3MzAwNjU0NjZ9.EdY6QbzCgxdWKPfBw-5eksHXd0H0a6YRjxXj9wz6cg7fBtBqTUZCsikAOTTtp8C0
+
             function connect() {
+               token = document.getElementById("token").value;
+              var headers = {
+                Authorization: 'Bearer ' + token
+              };
                 var userId = document.getElementById("userId").value;
                 var socket = new SockJS('/ws');
                 stompClient = Stomp.over(socket);
@@ -23,12 +26,18 @@
             }
 
             function sendMessage() {
+                var userId = document.getElementById("userId").value;
                 var messageContent = document.getElementById("message").value;
                 var recvId = document.getElementById("recvId").value;
                 if(messageContent && stompClient) {
                     var chatMessage = {
-                        sender: document.getElementById("username").value,
+                        senderId: 1,
+                        receiverId: recvId,
+                        senderName: document.getElementById("username").value,
+                        receiverName: "john",
                         content: messageContent,
+                        sendingTime: "13:37:42",
+                        sendingDate: "2023-11-22",
                         type: 'CHAT'
                     };
                     stompClient.send("/app/chat.sendMessage/"+recvId, {}, JSON.stringify(chatMessage));
@@ -51,6 +60,7 @@
     <div>
         <input type="text" id="userId" placeholder="Enter user id"/>
         <input type="text" id="recvId" placeholder="Enter receiver id"/>
+        <input type="text" id="token" placeholder="Enter token"/>
         <button onclick="connect()">Connect</button><br>
         <input type="text" id="username" placeholder="Enter your name"/>
         <input type="text" id="message" placeholder="Enter your message"/>

@@ -25,5 +25,4 @@ public class Packet {
 
     private Double height;
 
-    private String packetImage;
 }
