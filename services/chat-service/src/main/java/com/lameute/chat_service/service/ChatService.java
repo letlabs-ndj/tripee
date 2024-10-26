@@ -2,6 +2,8 @@ package com.lameute.chat_service.service;
 
 import com.lameute.chat_service.config.UserDetailsImpl;
 import com.lameute.chat_service.model.ChatMessage;
+import com.lameute.chat_service.model.Enums.MessageStatus;
+import com.lameute.chat_service.repo.ChatMessageRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -12,51 +14,29 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ChatService {
 
-  private final SimpMessageSendingOperations simpMessageSendingOperations;
-
-//  private final ConversationRepository conversationRepository;
-
-  private final OnlineOfflineService onlineOfflineService;
+  @Autowired
+  private SimpMessageSendingOperations simpMessageSendingOperations;
 
   @Autowired
-  public ChatService(
-      SimpMessageSendingOperations simpMessageSendingOperations,
-      OnlineOfflineService onlineOfflineService) {
-    this.simpMessageSendingOperations = simpMessageSendingOperations;
-    this.onlineOfflineService = onlineOfflineService;
-  }
+  private OnlineOfflineService onlineOfflineService;
 
-  public void sendMessageToConvId(
-          ChatMessage chatMessage, long receiverId) {
-//    long fromUserId = chatMessage.getSenderId();
-//    long toUserId = chatMessage.getReceiverId();
+  @Autowired
+  private ChatMessageRepo chatMessageRepo;
+
+  public void sendMessageToConvId(ChatMessage chatMessage, long receiverId) {
     boolean isTargetOnline = onlineOfflineService.isUserOnline(receiverId);
-    boolean isTargetSubscribed =
-        onlineOfflineService.isUserSubscribed(receiverId, "/topic/" + receiverId);
 
     if (!isTargetOnline) {
-      log.info(
-          "{} is not online. Content saved in unseen messages", chatMessage.getReceiverName());
-//      conversationEntityBuilder.deliveryStatus(MessageDeliveryStatusEnum.NOT_DELIVERED.toString());
-//      chatMessage.setMessageDeliveryStatusEnum(MessageDeliveryStatusEnum.NOT_DELIVERED);
-
-    } else if (!isTargetSubscribed) {
-      log.info(
-          "{} is online but not subscribed. sending to their private subscription",
-          chatMessage.getReceiverName());
-//      conversationEntityBuilder.deliveryStatus(MessageDeliveryStatusEnum.DELIVERED.toString());
-//      chatMessage.setMessageDeliveryStatusEnum(MessageDeliveryStatusEnum.DELIVERED);
-      simpMessageSendingOperations.convertAndSend("/topic/" + receiverId, chatMessage);
-
-    } else {
-      log.info(
-              "{} is online and message received successfully",
-              chatMessage.getReceiverName());
-//      conversationEntityBuilder.deliveryStatus(MessageDeliveryStatusEnum.SEEN.toString());
-//      chatMessage.setMessageDeliveryStatusEnum(MessageDeliveryStatusEnum.SEEN);
+      log.info("{} is not online. Content saved in unseen messages", chatMessage.getReceiverName());
+      chatMessage.setMessageStatus(MessageStatus.UNDELIVERED);
+      chatMessageRepo.save(chatMessage);
     }
-//    conversationRepository.save(conversationEntityBuilder.build());
-    simpMessageSendingOperations.convertAndSend("/topic/" + receiverId, chatMessage);
+    else {
+      log.info("{} is online and message received successfully", chatMessage.getReceiverName());
+      simpMessageSendingOperations.convertAndSend("/topic/" + receiverId, chatMessage);
+      chatMessage.setMessageStatus(MessageStatus.DELIVERED);
+      chatMessageRepo.save(chatMessage);
+    }
   }
 
   public UserDetailsImpl getUser() {

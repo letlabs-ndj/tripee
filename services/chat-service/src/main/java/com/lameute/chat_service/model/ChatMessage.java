@@ -1,8 +1,10 @@
 package com.lameute.chat_service.model;
 
+import com.lameute.chat_service.model.Enums.MessageStatus;
+import com.lameute.chat_service.model.Enums.MessageType;
+import jakarta.persistence.*;
 import lombok.*;
 
-import java.nio.file.FileStore;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,8 +15,10 @@ import java.time.LocalTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Entity
+@Table(name = "chat_messages")
 public class ChatMessage {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long messageId;
     private long senderId;
     private long receiverId;
@@ -24,13 +28,6 @@ public class ChatMessage {
     private LocalTime sendingTime;
     private LocalDate sendingDate;
     private MessageType messageType;
-    private UserConnection userConnection;
-
-    /**
-     * Enum representing the type of the chat message.
-     */
-    public enum MessageType {
-        CHAT, LEAVE, JOIN
-    }
+    private MessageStatus messageStatus;
 
 }
