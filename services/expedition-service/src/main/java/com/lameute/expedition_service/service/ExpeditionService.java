@@ -60,7 +60,7 @@ public class ExpeditionService {
         return expeditionResponses;
     }
 
-    public Expedition createExpedition(ExpeditionRequest request, String packetImageUrl){
+    public Expedition createExpedition(ExpeditionRequest request){
         if (!userExist(request.userId())){
             throw new UserNotFoundEXception("No user with id : "+request.userId()+" found");
         }
@@ -68,7 +68,6 @@ public class ExpeditionService {
             throw new RideNotFoundException("No ride with id : "+request.rideId()+" found");
         }
         Expedition expedition = expeditionMapper.toExpedition(request);
-        expedition.getPacket().setPacketImage(packetImageUrl);
         expedition.setExpeditionStatus(ExpeditionStatus.ON_HOLD);
         return expeditionRepo.save(expedition);
     }

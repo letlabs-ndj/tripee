@@ -44,37 +44,9 @@ public class ExpeditionController {
         return new ResponseEntity<>(expeditionService.getRideAcceptedReservations(rideId), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Expedition> createExpedition(@RequestParam("expeditionRequest") String requestJson,
-                                                       @RequestParam("packetImage") MultipartFile packetImage){
-        // constructs packet image url
-        String packetImageUrl = MvcUriComponentsBuilder
-                .fromMethodName(ExpeditionController.class, "serveFile", packetImage.getOriginalFilename())
-                .build().toString();
-
-        // Store the packet image
-        fileStorageService.storeFile(packetImage);
-
-        // Parse the request JSON String into a ExpeditionRequest object
-        ExpeditionRequest expeditionRequest = expeditionMapper.toRideRequest(requestJson);
-
-        // Save the expedition with the updated image URL
-        return new ResponseEntity<>(expeditionService.createExpedition(expeditionRequest,packetImageUrl), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-        /**
-         * Serves a file as a resource.
-         */
-        Resource file = fileStorageService.loadFileAsResource(filename);
-        if (file == null)
-            return ResponseEntity.notFound().build();
-
-        // Set the Content-Disposition header to indicate that the file should be downloaded.
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    @PostMapping("/save")
+    public ResponseEntity<Expedition> createExpedition(@RequestBody ExpeditionRequest expeditionRequest){
+        return new ResponseEntity<>(expeditionService.createExpedition(expeditionRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{idExp}")
