@@ -8,6 +8,7 @@ import com.lameute.ride_service.dto.RideResponse;
 import com.lameute.ride_service.dto.UserResponse;
 import com.lameute.ride_service.model.Ride;
 
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +42,7 @@ public class RideMapper {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         try {
-            RideRequest rideRequest = mapper.readValue(data, RideRequest.class);
-            return rideRequest;
+            return mapper.readValue(data, RideRequest.class);
         } catch (JsonProcessingException e) {
             System.out.println(e);
         }

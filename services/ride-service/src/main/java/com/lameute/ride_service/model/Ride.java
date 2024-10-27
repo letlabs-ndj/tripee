@@ -1,5 +1,6 @@
 package com.lameute.ride_service.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lameute.ride_service.model.Enum.RideStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Ride {
 
     private LocalDate departureDate;
 
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime departureTime;
 
     @OneToOne(cascade = CascadeType.ALL)

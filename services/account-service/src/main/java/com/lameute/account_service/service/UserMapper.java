@@ -2,7 +2,6 @@ package com.lameute.account_service.service;
 
 import com.lameute.account_service.dto.UserResponse;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lameute.account_service.dto.UserRequest;

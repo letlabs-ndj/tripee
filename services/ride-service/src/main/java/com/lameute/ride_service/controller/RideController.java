@@ -33,7 +33,7 @@ public class RideController {
     @PostMapping("/save")
     public ResponseEntity<Ride> saveRide(@RequestParam("rideRequest") String requestJson,
                                         @RequestParam("vehicleImage") MultipartFile vehicleImage){
-
+        System.out.println(requestJson);
         String imageUrl = "";
         if (vehicleImage != null){
             // constructs vehicle image url

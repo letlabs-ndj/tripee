@@ -1,9 +1,5 @@
 package com.lameute.reservation_service.dto;
 
-import com.lameute.reservation_service.model.Enums.ReservationStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 

@@ -15,8 +15,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.String.format;
-
 @Service
 @Slf4j
 public class NotificationsConsumer {

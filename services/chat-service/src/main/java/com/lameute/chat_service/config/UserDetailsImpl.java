@@ -2,7 +2,6 @@ package com.lameute.chat_service.config;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

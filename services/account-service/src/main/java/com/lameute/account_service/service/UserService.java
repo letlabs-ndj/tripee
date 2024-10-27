@@ -1,7 +1,5 @@
 package com.lameute.account_service.service;
 
-import java.util.Optional;
-
 import com.lameute.account_service.dto.AuthenticationResponse;
 import com.lameute.account_service.dto.UserResponse;
 import com.lameute.account_service.security.JwtService;
@@ -9,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lameute.account_service.dto.UserRequest;
-import com.lameute.account_service.exceptions.EmailAlreadyUsedException;
 import com.lameute.account_service.exceptions.UserNotFoundException;
 import com.lameute.account_service.model.User;
 import com.lameute.account_service.repo.UserRepo;

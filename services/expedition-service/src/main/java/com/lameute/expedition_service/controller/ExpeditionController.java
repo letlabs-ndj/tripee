@@ -5,15 +5,10 @@ import com.lameute.expedition_service.dto.ExpeditionResponse;
 import com.lameute.expedition_service.model.Expedition;
 import com.lameute.expedition_service.service.ExpeditionMapper;
 import com.lameute.expedition_service.service.ExpeditionService;
-import com.lameute.expedition_service.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.util.List;
 
@@ -22,9 +17,6 @@ import java.util.List;
 public class ExpeditionController {
     @Autowired
     private ExpeditionService expeditionService;
-
-    @Autowired
-    private FileStorageService fileStorageService;
 
     @Autowired
     private ExpeditionMapper expeditionMapper;
