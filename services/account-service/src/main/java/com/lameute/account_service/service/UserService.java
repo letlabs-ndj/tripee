@@ -50,4 +50,8 @@ public class UserService {
         return userRepo.findByEmail(email)
                 .orElseThrow(()-> new UserNotFoundException("No user with email : "+email+" not found"));
     }
+
+    public boolean isEmpty(){
+        return userRepo.count() < 1;
+    }
 }
