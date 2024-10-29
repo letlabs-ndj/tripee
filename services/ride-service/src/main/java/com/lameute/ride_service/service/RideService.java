@@ -67,10 +67,17 @@ public class RideService {
     }
 
     /*get all rides for a particular user */
-    public List<Ride> getAllRidesByUserId(long userId){
+    public List<RideResponse> getAllRidesByUserId(long userId){
         List<Ride> rides = rideRepo.findByUserId(userId)
                         .orElseThrow(()-> new RideNotFoundException("No rides for user with id : "+userId));
-        return rides;
+
+        List<RideResponse> rideResponses = new ArrayList<>();
+        for (Ride ride : rides) {
+            var user = userClient.getUserById(ride.getUserId());
+            rideResponses.add(rideMapper.toRideResponse(ride,user));
+        }
+
+        return rideResponses;
     }
 
     /*Search rides */
