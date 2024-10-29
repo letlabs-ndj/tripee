@@ -22,7 +22,7 @@ public class ExpeditionController {
     private ExpeditionMapper expeditionMapper;
 
     @GetMapping("/user/{userId}/all")
-    public ResponseEntity<List<Expedition>> getAllUserExpeditions(@PathVariable("userId") long userId){
+    public ResponseEntity<List<ExpeditionResponse>> getAllUserExpeditions(@PathVariable("userId") long userId){
         return new ResponseEntity<>(expeditionService.getAllUserExpeditions(userId), HttpStatus.ACCEPTED);
     }
 

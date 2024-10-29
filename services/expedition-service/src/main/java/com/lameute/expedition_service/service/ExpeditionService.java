@@ -29,14 +29,22 @@ public class ExpeditionService {
     @Autowired
     private ExpeditionMapper expeditionMapper;
 
-    public List<Expedition> getAllUserExpeditions(long userId){
-        return expeditionRepo.findByUserId(userId)
-                .orElseThrow(()->new ExpeditionNotFoundException("No expedition found for user with id : "+userId));
-    }
-
     public List<ExpeditionResponse> getRideExpeditions(long rideId){
         List<Expedition> expeditions =  expeditionRepo.findByRideId(rideId)
                 .orElseThrow(()->new ExpeditionNotFoundException("No expedition found for ride with id : "+rideId));
+
+        List<ExpeditionResponse> expeditionResponses = new ArrayList<>();
+        for (Expedition expedition : expeditions) {
+            var user = userClient.getUserById(expedition.getUserId());
+            expeditionResponses.add(expeditionMapper.toExpeditionResponse(expedition,user));
+        }
+
+        return expeditionResponses;
+    }
+
+    public List<ExpeditionResponse> getAllUserExpeditions(long userId){
+        List<Expedition> expeditions =  expeditionRepo.findByUserId(userId)
+                .orElseThrow(()->new ExpeditionNotFoundException("No expedition found for user with id : "+userId));
 
         List<ExpeditionResponse> expeditionResponses = new ArrayList<>();
         for (Expedition expedition : expeditions) {
