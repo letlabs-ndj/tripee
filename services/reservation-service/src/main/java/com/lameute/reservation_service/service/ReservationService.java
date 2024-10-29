@@ -30,9 +30,17 @@ public class ReservationService {
     @Autowired
     private ReservationMapper reservationMapper;
 
-    public List<Reservation> getAllUserReservations(long userId){
-        return reservationRepo.findByUserId(userId)
+    public List<ReservationResponse> getAllUserReservations(long userId){
+        List<Reservation> reservations = reservationRepo.findByUserId(userId)
                 .orElseThrow(()->new ReservationNotFoundException("No reservation found for user with id : "+userId));
+
+        List<ReservationResponse> reservationResponses = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+            var user = userClient.getUserById(reservation.getUserId());
+            reservationResponses.add(reservationMapper.toReservationResponse(reservation,user));
+        }
+
+        return reservationResponses;
     }
 
     public List<ReservationResponse> getRideReservations(long rideId){

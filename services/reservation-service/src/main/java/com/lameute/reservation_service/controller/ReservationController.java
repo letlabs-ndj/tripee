@@ -18,13 +18,13 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @GetMapping("/user/{userId}/all")
-    public ResponseEntity<List<Reservation>> getAllUserReservations(@PathVariable("userId") long userId){
-        return new ResponseEntity<>(reservationService.getAllUserReservations(userId), HttpStatus.ACCEPTED);
+    public ResponseEntity<List<ReservationResponse>> getAllUserReservations(@PathVariable("userId") long userId){
+        return new ResponseEntity<>(reservationService.getAllUserReservations(userId), HttpStatus.OK);
     }
 
     @GetMapping("/ride/{rideId}/all")
     public ResponseEntity<List<ReservationResponse>> getRideReservations(@PathVariable("rideId") long rideId){
-        return new ResponseEntity<>(reservationService.getRideReservations(rideId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(reservationService.getRideReservations(rideId), HttpStatus.OK);
     }
 
     @GetMapping("/ride/{rideId}/accepted")

@@ -36,6 +36,7 @@ public class ReservationMapper {
                 reservation.getReservationTime(),
                 reservation.getReservedPlaces(),
                 reservation.getPrice(),
+                reservation.getReservationStatus(),
                 reservation.getHasLuggage(),
                 user
         );

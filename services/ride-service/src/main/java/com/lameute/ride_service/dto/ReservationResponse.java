@@ -9,6 +9,7 @@ public record ReservationResponse(
         LocalTime reservationTime,
         Integer reservedPlaces,
         Double price,
+        ReservationStatus reservationStatus,
         Boolean hasLuggage,
         UserResponse user
 ) {
