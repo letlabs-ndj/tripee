@@ -23,6 +23,15 @@ spring:
           uri: lb:http://EXPEDITION-SERVICE
           predicates:
             - Path=/expeditions/**
+        - id: chat-service-websocket
+          uri: lb:ws://CHAT-SERVICE
+          predicates:
+            - Path=/ws/**
+        - id: chat-service-index
+          uri: lb:http://CHAT-SERVICE
+          predicates:
+            - Path=/index
+
   datasource:
     username: lameute
     url: jdbc:postgresql://localhost:5433/account_db

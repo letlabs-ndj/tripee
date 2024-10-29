@@ -14,6 +14,5 @@ public class TwilioInitializer {
     public TwilioInitializer(TwilioProperties twilioProperties) {
         this.twilioProperties = twilioProperties;
         Twilio.init(twilioProperties.getAccountSid(), twilioProperties.getAuthToken());
-        System.out.println("Twilio initialized with account-" + twilioProperties.getAccountSid());
     }
 }
