@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -32,7 +37,7 @@ public class RideController {
 
     @PostMapping("/save")
     public ResponseEntity<Ride> saveRide(@RequestParam("rideRequest") String requestJson,
-                                        @RequestParam("vehicleImage") MultipartFile vehicleImage){
+                                        @RequestParam("vehicleImage") MultipartFile vehicleImage) throws SocketException, UnknownHostException {
         System.out.println(requestJson);
         String imageUrl = "";
         if (vehicleImage != null){
@@ -41,14 +46,29 @@ public class RideController {
                     .fromMethodName(RideController.class, "serveFile", vehicleImage.getOriginalFilename())
                     .build().toString();
 
-            // Store the vehicle image and get the URL
+            /* We get server's ip address */
+            String ip = "";
+            try(final DatagramSocket socket = new DatagramSocket()){
+                /* Dummy connection to trigger the socket's initialization
+                 and assign a local port and IP address */
+                socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+
+                // Get server's ip address
+                ip = socket.getLocalAddress().getHostAddress();
+            }
+
+            /* we replace localhost by the ip address in the image url so as to be
+             able to acces the image */
+            imageUrl = imageUrl.replaceFirst("localhost", ip);
+
+            // We store the vehicle image
             fileStorageService.storeFile(vehicleImage);
         }
 
         // Parse the request JSON String into a RideRequest object
         RideRequest rideRequest = rideMapper.toRideRequest(requestJson);
 
-        // Save the ride with the updated image URL
+        // Save the ride with the image URL
         return new ResponseEntity<>(rideService.saveRide(rideRequest,imageUrl), HttpStatus.CREATED);
     }
 
@@ -74,7 +94,7 @@ public class RideController {
     }
 
     @GetMapping("/user/{idUser}/all")
-    public List<Ride> getAllUserRides(@PathVariable("idUser") long idUser){
+    public List<RideResponse> getAllUserRides(@PathVariable("idUser") long idUser){
         return rideService.getAllRidesByUserId(idUser);
     }
 

@@ -22,7 +22,7 @@ public class ChatController {
         return "index";
     }
 
-    @MessageMapping("/chat.sendMessage/{rcvId}")
+    @MessageMapping("/sendMessage/{rcvId}")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage,
                                    @DestinationVariable("rcvId") long receiverId) {
         System.out.println(receiverId);
