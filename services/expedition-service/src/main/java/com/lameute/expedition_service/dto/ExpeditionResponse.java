@@ -1,5 +1,6 @@
 package com.lameute.expedition_service.dto;
 
+import com.lameute.expedition_service.model.Enums.ExpeditionStatus;
 import com.lameute.expedition_service.model.Packet;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ public record ExpeditionResponse(
         LocalTime expeditionTime,
         String emailToContact,
         Double price,
+        ExpeditionStatus expeditionStatus,
         Packet packet,
         UserResponse user
 ) {

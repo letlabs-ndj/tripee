@@ -29,7 +29,7 @@ public class ReservationController {
 
     @GetMapping("/ride/{rideId}/accepted")
     public ResponseEntity<List<ReservationResponse>> getRideAcceptedReservations(@PathVariable("rideId") long rideId){
-        return new ResponseEntity<>(reservationService.getRideAcceptedReservations(rideId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(reservationService.getRideAcceptedReservations(rideId), HttpStatus.OK);
     }
 
     @PostMapping("/create")

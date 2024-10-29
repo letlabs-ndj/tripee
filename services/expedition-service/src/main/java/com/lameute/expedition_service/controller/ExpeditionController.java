@@ -23,17 +23,17 @@ public class ExpeditionController {
 
     @GetMapping("/user/{userId}/all")
     public ResponseEntity<List<ExpeditionResponse>> getAllUserExpeditions(@PathVariable("userId") long userId){
-        return new ResponseEntity<>(expeditionService.getAllUserExpeditions(userId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(expeditionService.getAllUserExpeditions(userId), HttpStatus.OK);
     }
 
     @GetMapping("/ride/{rideId}/all")
     public ResponseEntity<List<ExpeditionResponse>> getRideExpeditions(@PathVariable("rideId") long rideId){
-        return new ResponseEntity<>(expeditionService.getRideExpeditions(rideId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(expeditionService.getRideExpeditions(rideId), HttpStatus.OK);
     }
 
     @GetMapping("/ride/{rideId}/accepted")
     public ResponseEntity<List<ExpeditionResponse>> getRideAcceptedReservations(@PathVariable("rideId") long rideId){
-        return new ResponseEntity<>(expeditionService.getRideAcceptedReservations(rideId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(expeditionService.getRideAcceptedReservations(rideId), HttpStatus.OK);
     }
 
     @PostMapping("/save")

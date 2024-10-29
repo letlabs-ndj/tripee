@@ -40,7 +40,7 @@
                         sendingDate: "2023-11-22",
                         type: 'CHAT'
                     };
-                    stompClient.send("/app/chat.sendMessage/"+recvId, {}, JSON.stringify(chatMessage));
+                    stompClient.send("/chat/sendMessage/"+recvId, {}, JSON.stringify(chatMessage));
                     document.getElementById("message").value = '';
                 }
             }

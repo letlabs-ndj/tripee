@@ -1,6 +1,6 @@
 package com.lameute.ride_service.dto;
 
-public enum ReservationStatus {
+public enum ExpeditionStatus {
     ON_HOLD,
     ACCEPTED,
     REFUSED

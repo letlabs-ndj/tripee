@@ -42,6 +42,7 @@ public class ExpeditionMapper {
                 expedition.getExpeditionTime(),
                 expedition.getEmailToContact(),
                 expedition.getPrice(),
+                expedition.getExpeditionStatus(),
                 expedition.getPacket(),
                 user
         );

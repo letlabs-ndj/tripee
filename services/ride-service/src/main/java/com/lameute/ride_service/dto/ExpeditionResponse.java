@@ -8,6 +8,7 @@ public record ExpeditionResponse(
         LocalDate expeditionDate,
         LocalTime expeditionTime,
         String emailToContact,
+        ExpeditionStatus expeditionStatus,
         Double price,
         UserResponse user
 ) {
