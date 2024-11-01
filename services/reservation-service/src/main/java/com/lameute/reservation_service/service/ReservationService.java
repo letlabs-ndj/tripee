@@ -37,7 +37,13 @@ public class ReservationService {
         List<ReservationResponse> reservationResponses = new ArrayList<>();
         for (Reservation reservation : reservations) {
             var user = userClient.getUserById(reservation.getUserId());
-            reservationResponses.add(reservationMapper.toReservationResponse(reservation,user));
+            var ride = rideClient.getRideById(reservation.getRideId());
+            reservationResponses.add(reservationMapper.toReservationResponse(
+                    reservation,
+                    user,
+                    ride.departurePlace().getName(),
+                    ride.arrivalPlace().getName()
+            ));
         }
 
         return reservationResponses;
@@ -50,7 +56,13 @@ public class ReservationService {
         List<ReservationResponse> reservationResponses = new ArrayList<>();
         for (Reservation reservation : reservations) {
             var user = userClient.getUserById(reservation.getUserId());
-            reservationResponses.add(reservationMapper.toReservationResponse(reservation,user));
+            var ride = rideClient.getRideById(reservation.getRideId());
+            reservationResponses.add(reservationMapper.toReservationResponse(
+                    reservation,
+                    user,
+                    ride.departurePlace().getName(),
+                    ride.arrivalPlace().getName()
+                    ));
         }
 
         return reservationResponses;
@@ -62,8 +74,14 @@ public class ReservationService {
 
         List<ReservationResponse> reservationResponses = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            UserResponse user = userClient.getUserById(reservation.getUserId());
-            reservationResponses.add(reservationMapper.toReservationResponse(reservation,user));
+            var user = userClient.getUserById(reservation.getUserId());
+            var ride = rideClient.getRideById(reservation.getRideId());
+            reservationResponses.add(reservationMapper.toReservationResponse(
+                    reservation,
+                    user,
+                    ride.departurePlace().getName(),
+                    ride.arrivalPlace().getName()
+            ));
         }
 
         return reservationResponses;
@@ -96,6 +114,10 @@ public class ReservationService {
 
     public void deleteReservation(long reservationId){
         reservationRepo.deleteById(reservationId);
+    }
+
+    public void deleteReservationByRide(long rideId) {
+        reservationRepo.deleteByRideId(rideId);
     }
 
     public void acceptReservation(long reservationId,long rideId, int numberOfPlaces){

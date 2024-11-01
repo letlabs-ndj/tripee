@@ -29,15 +29,19 @@ public class ReservationMapper {
     }
 
     /*Converts Reservation object to Reservation response */
-    public ReservationResponse toReservationResponse(Reservation reservation, UserResponse user){
+    public ReservationResponse toReservationResponse(Reservation reservation, UserResponse user,
+                                                     String departurePlace, String arrivalPlace){
         return new ReservationResponse(
                 reservation.getId(),
+                reservation.getRideId(),
                 reservation.getReservationDate(),
                 reservation.getReservationTime(),
                 reservation.getReservedPlaces(),
                 reservation.getPrice(),
                 reservation.getReservationStatus(),
                 reservation.getHasLuggage(),
+                departurePlace,
+                arrivalPlace,
                 user
         );
     }

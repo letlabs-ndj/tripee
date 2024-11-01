@@ -7,12 +7,15 @@ import java.time.LocalTime;
 
 public record ReservationResponse(
         long id,
+        long rideId,
         LocalDate reservationDate,
         LocalTime reservationTime,
         Integer reservedPlaces,
         Double price,
         ReservationStatus reservationStatus,
         Boolean hasLuggage,
+        String departurePlace,
+        String arrivalPLace,
         UserResponse user
 ) {
 }
