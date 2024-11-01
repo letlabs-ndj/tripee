@@ -47,6 +47,11 @@ public class ReservationController {
         reservationService.deleteReservation(reservationId);
     }
 
+    @DeleteMapping("/delete/ride/{idRide}")
+    public void deleteReservationByRide(@PathVariable("idRide") long rideId){
+        reservationService.deleteReservationByRide(rideId);
+    }
+
     @PutMapping("/accept/{idRes}/rides/{idRide}/{numberOfPlaces}")
     public void acceptReservation(@PathVariable("idRes") long reservationId,
                                   @PathVariable("idRide") long rideId,
