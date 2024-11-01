@@ -96,6 +96,8 @@ public class RideService {
     /*delete a ride */
     public void deleteRide(long idRide){
         rideRepo.deleteById(idRide);
+        reservationClient.deleteReservationByRide(idRide);
+        expeditionClient.deleteExpeditionByRide(idRide);
     }
 
     /*start a ride */
@@ -138,6 +140,15 @@ public class RideService {
         kafkaTemplate.send("rideStop-topic",rideInfo);
     }
 
+    public RideResponse getRideById(long idRide) {
+        Ride ride = rideRepo.findById(idRide)
+                .orElseThrow(()-> new RideNotFoundException("No ride for user with id : "+idRide));
+
+        var user = userClient.getUserById(ride.getUserId());
+
+        return rideMapper.toRideResponse(ride,user);
+    }
+
     private static RideInfo getRideInfo(List<ReservationResponse> reservations, List<ExpeditionResponse> expeditions, Ride ride) {
         List<UserResponse> passengers = new ArrayList<>();
         List<UserResponse> expeditors = new ArrayList<>();
@@ -177,4 +188,5 @@ public class RideService {
     public void removeAvailablePlaces(long idRide, int numberOfPlaces) {
         rideRepo.removeAvailablePlaces(idRide,numberOfPlaces);
     }
+
 }

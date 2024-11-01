@@ -86,7 +86,12 @@ public class RideController {
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
 				"attachment; filename=\"" + file.getFilename() + "\"").body(file);
 	}
-    
+
+    @GetMapping("/id/{idRide}")
+    public ResponseEntity<RideResponse> getRideById(@PathVariable("idRide") long idRide){
+        return new ResponseEntity<>(rideService.getRideById(idRide), HttpStatus.OK);
+    }
+
     @PutMapping("/update/{idRide}")
     public Ride updateRide(@RequestBody RideRequest rideRequest,
                                  @PathVariable("idRide") long idRide){
