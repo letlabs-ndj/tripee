@@ -15,6 +15,12 @@ spring:
       ddl-auto: update
     show-sql: 'true'
 
+springdoc:
+  api-docs:
+    path: /doc/account-service/v3/api-docs
+  swagger-ui:
+    path: /doc/account-service/swagger-ui/index.html
+
 twilio:
   account_sid: ${TWILIO_ACCOUNT_SID}
   auth_token: ${TWILIO_AUTH_TOKEN}

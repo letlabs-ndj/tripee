@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.lameute.chat_service.service.OnlineOfflineService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ public class WebSocketEventListener {
 
   private final Map<String, String> simpSessionIdToSubscriptionId;
 
+  @Autowired
   public WebSocketEventListener(OnlineOfflineService onlineOfflineService) {
     this.onlineOfflineService = onlineOfflineService;
     this.simpSessionIdToSubscriptionId = new ConcurrentHashMap<>();

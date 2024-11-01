@@ -20,5 +20,11 @@ application:
     account-url: http://localhost:8085/users
     ride-url: http://localhost:8086/rides
 
+springdoc:
+  api-docs:
+    path: /doc/expedition-service/v3/api-docs
+  swagger-ui:
+    path: /doc/expedition-service/swagger-ui/index.html
+
 upload:
   path: packet-images

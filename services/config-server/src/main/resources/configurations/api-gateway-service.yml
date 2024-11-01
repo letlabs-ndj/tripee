@@ -10,27 +10,23 @@ spring:
         - id: account-service
           uri: lb:http://ACCOUNT-SERVICE
           predicates:
-            - Path=/users/**
+            - Path=/users/** , /doc/account-service/**
         - id: ride-service
           uri: lb:http://RIDE-SERVICE
           predicates:
-            - Path=/rides/**
+            - Path=/rides/** , /doc/ride-service/**
         - id: reservation-service
           uri: lb:http://RESERVATION-SERVICE
           predicates:
-            - Path=/reservations/**
+            - Path=/reservations/** , /doc/reservation-service/**
         - id: expedition-service
           uri: lb:http://EXPEDITION-SERVICE
           predicates:
-            - Path=/expeditions/**
+            - Path=/expeditions/** , /doc/expedition-service/**
         - id: chat-service-websocket
           uri: lb:ws://CHAT-SERVICE
           predicates:
-            - Path=/ws/**
-        - id: chat-service-index
-          uri: lb:http://CHAT-SERVICE
-          predicates:
-            - Path=/index
+            - Path=/ws/**, /doc/chat-service/**
 
   datasource:
     username: lameute
@@ -47,6 +43,17 @@ spring:
     show-sql: 'true'
   main:
     web-application-type: reactive
+
+springdoc:
+  api-docs:
+    path: /doc/api-gateway/v3/api-docs
+  swagger-ui:
+    path: /doc/api-gateway/swagger-ui/index.html
+    urls:
+      - url: /doc/api-gateway/v3/api-docs
+        name: API Gateway Service
+      - url: /doc/account-service/v3/api-docs
+        name: Account Service
 
 secret:
   signing_key: An23aU8bnGb3TzHx22ybf4tEA5jRBRf1VxJ0InUdBg6lGgkvmLKsKVDUpRsmZEXQ

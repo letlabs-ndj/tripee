@@ -17,5 +17,11 @@ application:
   config:
     account-url: http://localhost:8085/users
 
+springdoc:
+  api-docs:
+    path: /doc/chat-service/v3/api-docs
+  swagger-ui:
+    path: /doc/chat-service/swagger-ui/index.html
+
 secret:
   signing_key: An23aU8bnGb3TzHx22ybf4tEA5jRBRf1VxJ0InUdBg6lGgkvmLKsKVDUpRsmZEXQ

@@ -3,6 +3,7 @@ package com.lameute.api_gateway_service.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -31,7 +32,7 @@ public class SecurityConfiguration {
                 .exceptionHandling(e -> e.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
 
-                        .pathMatchers("/eureka/**","/users/**","/swagger-ui.html").permitAll()
+                        .pathMatchers("/eureka/**","/users/**","/doc/**").permitAll()
                         .anyExchange().authenticated())
                 .addFilterBefore(jwtFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)

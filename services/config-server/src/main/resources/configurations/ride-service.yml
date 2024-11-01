@@ -22,6 +22,12 @@ spring:
       properties:
         spring.json.type.mapping: RideInfo:com.lameute.ride_service.kafka.RideInfo
 
+springdoc:
+  api-docs:
+    path: /doc/ride-service/v3/api-docs
+  swagger-ui:
+    path: /doc/ride-service/swagger-ui/index.html
+
 application:
   config:
     account-url: http://localhost:8085/users
