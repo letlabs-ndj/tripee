@@ -5,6 +5,7 @@
 
 # IDE configuration files
 .idea/
+.vscode/
 *.suo
 *.user
 
