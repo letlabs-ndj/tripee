@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface ChatMessageRepo extends JpaRepository<ChatMessage, Long> {
 
     Optional<List<ChatMessage>> findByMessageStatus(MessageStatus messageStatus);
+
+    Optional<List<ChatMessage>> findByConvId(String convId);
 }

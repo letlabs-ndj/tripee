@@ -10,6 +10,8 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class ChatService {
@@ -37,6 +39,11 @@ public class ChatService {
       chatMessage.setMessageStatus(MessageStatus.DELIVERED);
       chatMessageRepo.save(chatMessage);
     }
+  }
+
+  public List<ChatMessage> getChatMessageByConvId(String convId){
+    return chatMessageRepo.findByConvId(convId)
+            .orElseThrow(()->new RuntimeException("No messages for this convId"));
   }
 
   public UserDetailsImpl getUser() {
