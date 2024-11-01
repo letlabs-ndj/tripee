@@ -26,6 +26,13 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private static final String[] AUTH_WHITE_LIST = {
+            "/users/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/v2/api-docs/**",
+            "/swagger-resources/**"
+    };
 
     @Autowired
     private JwtAuthenticationFilter jwtFilter;
@@ -38,7 +45,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->{
-                   registry.requestMatchers("/users/**").permitAll();
+                   registry.requestMatchers(AUTH_WHITE_LIST).permitAll();
                    registry.anyRequest().authenticated();
                 })
                 .sessionManagement(sessionManager ->{
