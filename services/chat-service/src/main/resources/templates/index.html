@@ -31,8 +31,9 @@
                 var recvId = document.getElementById("recvId").value;
                 if(messageContent && stompClient) {
                     var chatMessage = {
-                        senderId: 1,
+                        senderId: userId,
                         receiverId: recvId,
+                        convId:"952-854",
                         senderName: document.getElementById("username").value,
                         receiverName: "john",
                         content: messageContent,
