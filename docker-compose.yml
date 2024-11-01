@@ -24,7 +24,7 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
-      - "5434:5432"
+      - "5437:5432"
     networks:
       - tripee-net
     restart: unless-stopped
@@ -55,6 +55,21 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - "5434:5432"
+    networks:
+      - tripee-net
+    restart: unless-stopped
+
+  chat-service:
+    container_name: chat_db
+    image: postgres
+    environment:
+      POSTGRES_USER: lameute
+      POSTGRES_PASSWORD: lameutepass
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5436:5432"
     networks:
       - tripee-net
     restart: unless-stopped
