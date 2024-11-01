@@ -1,6 +1,7 @@
 package com.lameute.chat_service.controller;
 
 import com.lameute.chat_service.model.ChatMessage;
+import com.lameute.chat_service.model.Conversation;
 import com.lameute.chat_service.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
