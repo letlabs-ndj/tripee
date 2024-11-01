@@ -35,15 +35,19 @@ public class ExpeditionMapper {
     }
 
     /*Converts Expedition object to Expedition response */
-    public ExpeditionResponse toExpeditionResponse(Expedition expedition, UserResponse user){
+    public ExpeditionResponse toExpeditionResponse(Expedition expedition, UserResponse user,
+                                                   String departurePlace, String arrivalPlace){
         return new ExpeditionResponse(
                 expedition.getId(),
+                expedition.getRideId(),
                 expedition.getExpeditionDate(),
                 expedition.getExpeditionTime(),
                 expedition.getEmailToContact(),
                 expedition.getPrice(),
                 expedition.getExpeditionStatus(),
                 expedition.getPacket(),
+                departurePlace,
+                arrivalPlace,
                 user
         );
     }

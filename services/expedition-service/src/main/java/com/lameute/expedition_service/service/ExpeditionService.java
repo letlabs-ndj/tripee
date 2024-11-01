@@ -36,7 +36,13 @@ public class ExpeditionService {
         List<ExpeditionResponse> expeditionResponses = new ArrayList<>();
         for (Expedition expedition : expeditions) {
             var user = userClient.getUserById(expedition.getUserId());
-            expeditionResponses.add(expeditionMapper.toExpeditionResponse(expedition,user));
+            var ride = rideClient.getRideById(expedition.getRideId());
+            expeditionResponses.add(expeditionMapper.toExpeditionResponse(
+                    expedition,
+                    user,
+                    ride.departurePlace().getName(),
+                    ride.arrivalPlace().getName()
+            ));
         }
 
         return expeditionResponses;
@@ -49,7 +55,13 @@ public class ExpeditionService {
         List<ExpeditionResponse> expeditionResponses = new ArrayList<>();
         for (Expedition expedition : expeditions) {
             var user = userClient.getUserById(expedition.getUserId());
-            expeditionResponses.add(expeditionMapper.toExpeditionResponse(expedition,user));
+            var ride = rideClient.getRideById(expedition.getRideId());
+            expeditionResponses.add(expeditionMapper.toExpeditionResponse(
+                    expedition,
+                    user,
+                    ride.departurePlace().getName(),
+                    ride.arrivalPlace().getName()
+            ));
         }
 
         return expeditionResponses;
@@ -62,7 +74,13 @@ public class ExpeditionService {
         List<ExpeditionResponse> expeditionResponses = new ArrayList<>();
         for (Expedition expedition : expeditions) {
             var user = userClient.getUserById(expedition.getUserId());
-            expeditionResponses.add(expeditionMapper.toExpeditionResponse(expedition,user));
+            var ride = rideClient.getRideById(expedition.getRideId());
+            expeditionResponses.add(expeditionMapper.toExpeditionResponse(
+                    expedition,
+                    user,
+                    ride.departurePlace().getName(),
+                    ride.arrivalPlace().getName()
+            ));
         }
 
         return expeditionResponses;
@@ -96,6 +114,10 @@ public class ExpeditionService {
 
     public void deleteExpedition(long expeditionId){
         expeditionRepo.deleteById(expeditionId);
+    }
+
+    public void deleteExpeditionByRide(long rideId) {
+        expeditionRepo.deleteByRideId(rideId);
     }
 
     public void acceptExpedition(long expeditionId){

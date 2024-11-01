@@ -8,12 +8,15 @@ import java.time.LocalTime;
 
 public record ExpeditionResponse(
         long id,
+        long rideId,
         LocalDate expeditionDate,
         LocalTime expeditionTime,
         String emailToContact,
         Double price,
         ExpeditionStatus expeditionStatus,
         Packet packet,
+        String departurePlace,
+        String arrivalPLace,
         UserResponse user
 ) {
 }

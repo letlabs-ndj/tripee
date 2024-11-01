@@ -51,6 +51,11 @@ public class ExpeditionController {
         expeditionService.deleteExpedition(expeditionId);
     }
 
+    @DeleteMapping("/delete/ride/{idRide}")
+    public void deleteExpeditionByRide(@PathVariable("idRide") long rideId){
+        expeditionService.deleteExpeditionByRide(rideId);
+    }
+
     @PutMapping("/accept/{idExp}")
     public void acceptExpedition(@PathVariable("idExp") long expeditionId){
         expeditionService.acceptExpedition(expeditionId);
