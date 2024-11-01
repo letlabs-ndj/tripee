@@ -42,8 +42,8 @@ These instructions will help you set up and run the application on your local ma
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/your-repo.git
-   cd your-repo
+   git clone  https://github.com/Lameute-Org/tripee.git
+   cd spring-boot-backend/service
    ```
 
 2. **Twilio Setup for OTP Authentication**  
