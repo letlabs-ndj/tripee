@@ -5,12 +5,6 @@ import com.lameute.chat_service.model.Enums.MessageType;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-/**
- * Represents a chat message in the chat application.
- */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,12 +16,12 @@ public class ChatMessage {
     private long messageId;
     private long senderId;
     private long receiverId;
+    private String convId;
     private String senderName;
     private String receiverName;
     private String content;
-    private LocalTime sendingTime;
-    private LocalDate sendingDate;
+    private String sendingTime;
+    private String sendingDate;
     private MessageType messageType;
     private MessageStatus messageStatus;
-
 }
