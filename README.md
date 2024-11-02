@@ -43,7 +43,7 @@ These instructions will help you set up and run the application on your local ma
 1. **Clone the Repository:**
    ```bash
    git clone --recurse-submodules https://github.com/Lameute-Org/CGWEB-lameute-tripee.git
-   cd spring-boot-backend/tripee
+   cd spring-boot-backend/tripee/services
    ```
 
 2. **Twilio Setup for OTP Authentication**  
